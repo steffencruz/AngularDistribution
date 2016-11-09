@@ -1,0 +1,56 @@
+INFILE: Results_ExcGamThetaMats_Redwood.root
+OUTFILE: Results_dd3.root
+CSFILE: AngDist_dd3.txt
+
+FRAME:     Cm
+REACTION:	 dd
+
+EXC: 				0
+EXCSIG:			350
+
+GAM: 				0
+NORMALIZATION: 1.0
+
+EXCBINSZ: 	10.0
+THETABINSZ: 1.0
+
+// user specified counts from another file
+CNTFILE: FittedSlices_DeutCombined.root //FittedSlices.root 
+CNTHIST: AverageCounts 									//DeutCounts_1DegCm
+
+FIT:				TRUE
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const lin quad
+BGSPEC: 		19.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		20.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		21.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		22.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		23.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		24.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+
+CNTSPEC: 25.5
+CNTSPEC: 26.5
+CNTSPEC: 27.5
+CNTSPEC: 28.5
+CNTSPEC: 29.5
+CNTSPEC: 30.5
+CNTSPEC: 31.5
+CNTSPEC: 32.5
+CNTSPEC: 33.5
+CNTSPEC: 34.5
+CNTSPEC: 35.5
+CNTSPEC: 36.5
+CNTSPEC: 37.5
+CNTSPEC: 38.5
+CNTSPEC: 39.5
+CNTSPEC: 40.5
+CNTSPEC: 41.5
+
+BGSPEC: 		42.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		43.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		44.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		45.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		46.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		47.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		48.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		49.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
