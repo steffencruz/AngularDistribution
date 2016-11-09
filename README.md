@@ -6,6 +6,7 @@ making projections of an ExcVsTheta matrix and extracting
 the counts within a specified excitation energy window
 
 ___Input Description___
+
 A standardized input file is required to create an angular 
 distribution. This describes all energy and angular gates 
 to be used, including background shapes. The input can also
