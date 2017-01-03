@@ -1,0 +1,28 @@
+INFILE: Results_Sr94.root
+OUTFILE: Results_sr94_dp352.root
+CSFILE: AngDist_sr94_dp352.txt
+
+BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
+A:         94
+BEAME:     500      // in middle of target, MeV
+TARGPOS:   0 0 -1   // Z = -1.0 mm
+TARGTHICK: 5.0      // 5 um
+
+FRAME:     Cm
+REACTION:	 dp
+NORMALIZATION: 0.02147	0.00010
+
+EXC: 				352
+
+GAM: 				352
+GAMPEAK:    340 365
+GAMBGLO:    300 315
+GAMBGHI:    365 380
+
+EXCBINSZ: 	40.0
+GAMBINSZ:   1.0
+THETABINSZ: 4.0
+MAXRELERR:  1.5
+
+//THETARNG: true    
+

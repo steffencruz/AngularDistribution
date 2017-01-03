@@ -1,0 +1,21 @@
+INFILE: Results_RedwoodMats.root
+OUTFILE: Results_1792.root
+CSFILE: AngDist_1792.txt							// angular distribution output file
+// not enough statistics to do this
+
+FRAME:     	Cm
+REACTION:		dp
+NORMALIZATION: 7.93e-4 0.07e-4
+
+EXC: 				1792
+
+GAM: 		 		978
+GAMPEAK: 		960 995
+GAMBGLO:	 	880 920 
+GAMBGHI:	 	1060 1110
+
+EXCBINSZ: 	40.0
+GAMBINSZ:   1.0
+THETABINSZ: 6.0
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope

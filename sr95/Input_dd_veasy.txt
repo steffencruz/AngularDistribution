@@ -1,0 +1,18 @@
+INFILE: Results_ExcGamThetaMats_Veasy.root
+OUTFILE: Results_dd_veasy.root
+CSFILE: AngDist_dd_veasy.txt
+
+FRAME:     Cm
+REACTION:	 dd
+
+EXC: 				0
+EXCSIG:			350
+
+GAM: 				0
+NORMALIZATION: 1.0
+
+EXCBINSZ: 	10.0
+THETABINSZ: 1.0
+
+FIT:				TRUE
+

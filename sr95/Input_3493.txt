@@ -1,0 +1,44 @@
+INFILE: Results_RedwoodMats.root
+OUTFILE: Results_3493.root
+CSFILE: AngDist_3493.txt
+
+FRAME:     	Cm
+REACTION:		dp
+NORMALIZATION: 7.93e-4 0.07e-4
+
+EXC: 				3500
+
+GAM: 		 		3500
+GAMPEAK: 		3450 3535
+GAMBGLO:	 	3350 3420 
+GAMBGHI:	 	3600 3700
+
+EXCBINSZ: 	40.0
+GAMBINSZ:   1.0
+THETABINSZ: 5.0
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+
+//BGSPEC: 		2.5				0			0			0 		0  				// REJECT
+//BGSPEC: 		7.5				0			0			0 		0  				// REJECT
+//BGSPEC: 		12.5			0			0			0 		0  				// REJECT
+//BGSPEC: 		17.5			0			0			0 		0  				// REJECT
+//BGSPEC: 		22.5			0			0			0 		0  				// REJECT
+//BGSPEC: 		27.5			2800	2900	4000	4100  		// UBOX
+//BGSPEC: 		32.5			2800	2900	4000	4100  		// UBOX
+//BGSPEC: 		37.5			2800	2900	4000	4100  		// UBOX
+//BGSPEC: 		42.5			2800	2900	4000	4100  		// UBOX
+//BGSPEC: 		47.5			2800	2900	4000	4100  		// UBOX
+//BGSPEC: 		62.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		67.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		72.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		77.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		82.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		87.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		92.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		97.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		102.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		107.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		112.5			2700	2800	4000 	4100  		// DBOX
+//BGSPEC: 		117.5			0			0			0 		0  				// REJECT
+//BGSPEC: 		122.5			0			0			0 		0  				// REJECT

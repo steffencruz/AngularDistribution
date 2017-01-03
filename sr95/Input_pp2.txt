@@ -1,0 +1,116 @@
+INFILE: Results_ExcGamThetaMats_Redwood.root
+OUTFILE: Results_pp2.root
+CSFILE: AngDist_pp2.txt
+
+FRAME:     Cm
+REACTION:	 pp
+
+EXC: 				0
+EXCSIG:			250
+
+NORMALIZATION: 1.0
+
+EXCBINSZ: 	10.0
+THETABINSZ: 1.0
+
+// user specified counts from another file
+CNTFILE: FittedSlices_ProtCombined.root //FittedSlices.root 
+CNTHIST: AverageCounts 									//DeutCounts_1DegCm
+
+FIT:				TRUE
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const lin quad
+BGSPEC: 		19.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		20.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		21.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		22.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		23.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		24.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		25.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		26.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+
+CNTSPEC: 27.5
+CNTSPEC: 28.5
+CNTSPEC: 29.5
+CNTSPEC: 30.5
+CNTSPEC: 31.5
+CNTSPEC: 32.5
+CNTSPEC: 33.5
+CNTSPEC: 34.5
+CNTSPEC: 35.5
+CNTSPEC: 36.5
+CNTSPEC: 37.5
+CNTSPEC: 38.5
+CNTSPEC: 39.5
+CNTSPEC: 40.5
+CNTSPEC: 41.5
+CNTSPEC: 42.5
+CNTSPEC: 43.5
+CNTSPEC: 44.5
+
+BGSPEC: 		45.5	  -400 	 -260  500		600 	0	  	0		   // DBOX
+BGSPEC: 		46.5	  -400 	 -260  500		600 	0	  	0		   // DBOX
+BGSPEC: 		47.5	  -400 	 -260  500		600 	0	  	0		   // DBOX
+BGSPEC: 		48.5	  -400 	 -260  500		600 	0	  	0		   // DBOX
+BGSPEC: 		49.5	  -400 	 -260  500		600 	0	  	0		   // DBOX
+BGSPEC: 		50.5	  -400 	 -260  500		600 	0	  	0		   // DBOX
+BGSPEC: 		51.5	  -400 	 -260  500		600 	0	  	0		   // DBOX
+BGSPEC: 		52.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		53.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		54.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		55.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		56.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		57.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		58.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		59.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		60.5	  -600 	 -500  500		600 	0	  	0		   // DBOX
+BGSPEC: 		61.5	  -600 	 -500  500		600 	0	  	0		   // DBOX
+BGSPEC: 		62.5	  -600 	 -500  500		600 	0	  	0		   // DBOX
+BGSPEC: 		63.5	  -600 	 -500  500		600 	0	  	0		   // DBOX
+BGSPEC: 		64.5	  -600 	 -500  500		600 	0	  	0		   // DBOX
+BGSPEC: 		65.5	  -600 	 -500  500		600 	0	  	0		   // DBOX
+BGSPEC: 		66.5	  -600 	 -500  600		700 	0	  	0		   // DBOX
+BGSPEC: 		67.5	  -600 	 -500  700		800 	0	  	0		   // DBOX
+BGSPEC: 		68.5	  -600 	 -500  800		900 	0	  	0		   // DBOX
+BGSPEC: 		69.5	  -600 	 -500  800		900 	0	  	0		   // DBOX
+BGSPEC: 		70.5	  -600 	 -500  800		900 	0	  	0		   // DBOX
+BGSPEC: 		71.5	  -600 	 -500  800		900 	0	  	0		   // DBOX
+BGSPEC: 		72.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		73.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		74.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		75.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		76.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		77.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		78.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		79.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		80.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		81.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		82.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		83.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		84.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		85.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		86.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		87.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		88.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		89.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		90.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		91.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		92.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		93.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		94.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		95.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		96.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		97.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		98.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		99.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		100.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		101.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		102.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		103.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		104.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		105.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		106.5	  -600 	 -500  1000		1100 	0	  	0		   // DBOX
+BGSPEC: 		107.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+BGSPEC: 		108.5		  0 	  0 	  0			0 		0	  	0		   // REJECT
+
+

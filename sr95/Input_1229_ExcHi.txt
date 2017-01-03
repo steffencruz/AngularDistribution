@@ -1,0 +1,30 @@
+INFILE: Results_RedwoodMats.root
+OUTFILE: Results_1229_ExcHi2900.root
+CSFILE: AngDist_1229_ExcHi2900.txt
+
+FRAME:     	Cm
+REACTION:		dp
+NORMALIZATION: 7.93e-4 0.07e-4
+
+EXC: 				1229
+EXCLO: 600
+EXCHI: 2900
+
+GAM: 		 		415
+GAMPEAK: 		400 425
+GAMBGLO:	 	380 400 
+GAMBGHI:	 	425 445
+
+EXCBINSZ: 	40.0
+GAMBINSZ:   1.0
+THETABINSZ: 4.0
+
+//bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+
+BGSPEC:			2   			0			0			0			0		 			// REJECT
+
+BGSPEC:			94   			0			0			0			0		 			// REJECT
+BGSPEC:			98   			0			0			0			0		 			// REJECT
+BGSPEC:			102 			0			0			0			0		 			// REJECT
+BGSPEC:			106 			0			0			0			0		 			// REJECT
+

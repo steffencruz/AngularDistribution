@@ -1,0 +1,32 @@
+INFILE: Results_ExcGamThetaMats.root
+OUTFILE: Results_GS.root
+
+FRAME:     Cm
+REACTION:	 dp
+
+EXC: 				0
+GAM: 				0
+
+EXCBINSZ: 	40.0
+THETABINSZ: 5.0
+NORMALIZATION: 3.1012e-4
+
+//bgspec theta[mid]  bglo1 bglo2 bghi1 bghi2 const lin quad
+BGSPEC: 		2.5			 -600	 -460 	360 	450  	0			0		0 	// UQQQ
+BGSPEC: 		7.5			 -600	 -460 	360 	450  	0			0		0   // UQQQ
+BGSPEC: 		12.5		 -600	 -460 	360 	450  	0			0		0   // UQQQ
+BGSPEC: 		17.5		 -600	 -460 	360 	450  	0			0		0   // UQQQ
+
+BGSPEC: 		22.5		 -500	 -400 	500 	600  	0			0		0   // UBOX
+BGSPEC: 		27.5		 -500	 -400 	500 	600  	0			0		0   // UBOX
+BGSPEC: 		32.5		 -500	 -400 	500 	600  	0			0		0   // UBOX
+BGSPEC: 		37.5		 -500	 -400 	500 	600  	0			0		0   // UBOX
+BGSPEC: 		42.5		 -500	 -400 	500 	600  	0			0		0   // UBOX
+BGSPEC: 		47.5		 -500	 -400 	500 	600  	0			0		0   // UBOX
+
+BGSPEC: 		62.5		 -700	 -600 	300 	400  	0			0		0   // DBOX
+BGSPEC: 		67.5		 -700	 -600 	300 	400  	0			0		0   // DBOX
+BGSPEC: 		72.5		 -700	 -600 	300 	400  	0			0		0   // DBOX
+BGSPEC: 		77.5		 -700	 -600 	300 	400  	0			0		0   // DBOX
+BGSPEC: 		82.5		 -700	 -600 	300 	400  	0			0		0   // DBOX
+BGSPEC: 		87.5		 -700	 -600 	300 	400  	0			0		0   // DBOX

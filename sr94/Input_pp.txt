@@ -1,0 +1,24 @@
+INFILE: Results_Sr94_Elastics.root
+OUTFILE: Results_sr94_pp.root
+CSFILE: AngDist_sr94_pp.txt
+
+BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
+A:         94
+BEAME:     500      // in middle of target, MeV
+TARGPOS:   0 0 -1   // Z = -1.0 mm
+TARGTHICK: 5.0      // 5 um
+
+FRAME:     Cm
+REACTION:	 pp
+
+EXC: 				0
+EXCSIG:			350
+
+GAM: 				0
+NORMALIZATION: 1.0
+
+EXCBINSZ: 	40.0
+THETABINSZ: 1.0
+MAXRELERR:  1.0
+
+FIT:				TRUE

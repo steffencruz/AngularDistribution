@@ -1,0 +1,22 @@
+INFILE: Results_ExcGamThetaMats_Redwood.root 
+OUTFILE: Results_pp352.root					
+CSFILE: AngDist_pp352.txt							// angular distribution output file
+
+FRAME:     	Cm
+REACTION:		pp
+NORMALIZATION: 1.0
+
+EXC: 				0
+EXCSIG:			250
+
+GAM: 		 		352
+GAMPEAK: 		342 358
+GAMBGLO:	 	300 315 
+GAMBGHI:	 	365 390
+
+EXCBINSZ: 	40.0
+THETABINSZ: 1.0
+
+//bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+
+

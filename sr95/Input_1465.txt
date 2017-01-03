@@ -1,0 +1,22 @@
+INFILE: Results_RedwoodMats_TigTheta135.root
+OUTFILE: Results_1465.root					
+CSFILE: AngDist_1465.txt							// angular distribution output file
+
+FRAME:     	Cm
+REACTION:		dp
+NORMALIZATION: 7.93e-4 0.07e-4
+
+EXC: 				1465
+
+GAM: 		 		650
+GAMPEAK: 		625 655
+GAMBGLO:	 	615 625 
+GAMBGHI:	 	655 665
+
+EXCBINSZ: 	40.0
+GAMBINSZ:   1.0
+THETABINSZ: 4.0
+
+//bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+
+

@@ -1,0 +1,26 @@
+INFILE: Results_RedwoodMats.root
+OUTFILE: Results_2113.root
+CSFILE: AngDist_2113.txt
+
+FRAME:     	Cm
+REACTION:		dp
+NORMALIZATION: 7.93e-4 0.07e-4
+
+EXC: 				2113
+
+//GAM: 		 		606.6
+//GAMPEAK: 		590 620
+//GAMBGLO:	 	560 590 
+//GAMBGHI:	 	620 640
+
+GAM: 		 		485
+GAMPEAK: 		472 492
+GAMBGLO:	 	462 472 
+GAMBGHI:	 	492 502
+
+EXCBINSZ: 	40.0
+GAMBINSZ:   1.0
+THETABINSZ: 5.0
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+

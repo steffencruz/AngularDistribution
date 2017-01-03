@@ -1,0 +1,27 @@
+INFILE: Results_RedwoodMats.root
+OUTFILE: Results_2576.root
+CSFILE: AngDist_2576.txt
+
+FRAME:     	Cm
+REACTION:		dp
+NORMALIZATION: 7.93e-4 0.07e-4
+
+EXC: 				2576
+EXCSIGMA:	 	240
+
+GAM: 		 		1761
+GAMPEAK: 		1738 1780
+GAMBGLO:	 	1695 1725
+GAMBGHI:	 	1795 1830
+
+EXCBINSZ: 	40.0
+GAMBINSZ:   1.0
+THETABINSZ: 5.0
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+
+//BGSPEC: 		2.5				0			0			0 		0  				// REJECT
+//BGSPEC: 		7.5				0			0			0 		0  				// REJECT
+//BGSPEC:     12.5     2100  2150  3100   3150      // UQQQ
+//BGSPEC: 		47.5			0			0			0 		0  				// REJECT
+

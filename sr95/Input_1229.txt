@@ -7,6 +7,8 @@ REACTION:		dp
 NORMALIZATION: 7.93e-4 0.07e-4
 
 EXC: 				1229
+EXCLO:      830
+EXCHI:      1630
 
 GAM: 		 		415
 GAMPEAK: 		400 425
@@ -17,17 +19,12 @@ EXCBINSZ: 	40.0
 GAMBINSZ:   1.0
 THETABINSZ: 4.0
 
+THETARNG: true    
+
 //bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 
-BGSPEC:			62  			0			0			0			0 				// REJECT
-BGSPEC:			66  			400		600		1400	1600 			// DBOX
-BGSPEC:			70  			400		600		1400	1600 			// DBOX
-BGSPEC:			74  			400		600		1400	1600 			// DBOX
-BGSPEC:			78  			400		600		1400	1600 			// DBOX
-BGSPEC:			82  			400		600		1400	1600 			// DBOX
-BGSPEC:			86  			400		600		1400	1600 			// DBOX
-BGSPEC:			90  			400		600		1400	1600 			// DBOX
-//BGSPEC:			94  			400		600		1400	1600 			// DBOX
+BGSPEC:			2   			0			0			0			0		 			// REJECT
+
 BGSPEC:			94   			0			0			0			0		 			// REJECT
 BGSPEC:			98   			0			0			0			0		 			// REJECT
 BGSPEC:			102 			0			0			0			0		 			// REJECT

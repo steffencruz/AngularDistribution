@@ -26,6 +26,8 @@
 #include "TSharcAnalysis.h"
 #include "TTigressAnalysis.h"
 
+#include "GRootCommands.h"
+
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 //
@@ -102,6 +104,13 @@ struct SteffenOptions {
 	
 	std::string badstripsfile;
 	
+  Int_t A         ;
+  Double_t BeamE  ;
+	Double_t TargetX;
+	Double_t TargetY;
+	Double_t TargetZ;	
+	Double_t TargetThick;	
+	
 	std::string reaction;	
 	std::string frame;
 	
@@ -128,19 +137,83 @@ struct SteffenOptions {
 	std::vector<double> bgtheta; // index of theta in this vector is map key
 	std::map<int,std::vector<double> > bgspec;
 	
+	std::vector<double> FitPeakMean;
+	double FitPeakSigma;
+	
 	Bool_t fit;
 };
 
+struct TriplePeakResults {
+
+  double content[3];
+  double height[3];  
+  double mean[3];
+  double sigma[3]; 
+  double cnterr[3];
+  //double bg[3]; //? 
+  double sum;
+  double sumerr;
+  
+  void Print(){
+    printf("\n\n TRIPLE PEAK RESULT : ");
+    printf("\n\tcontent[0] = %.1f +/- %.1f",content[0],cnterr[0]);
+    printf("\n\tmean[0] = %.1f",mean[0]);
+    printf("\n\tsigma[0] = %.1f\n\n",sigma[0]);
+  }
+};
+
+TriplePeakResults GetTripleFitResults(TH1 *hist) {
+  TriplePeakResults tpr;
+  TF1 *f = (TF1*)hist->GetListOfFunctions()->FindObject("triple_gaus_fit");
+  if(!f) return tpr;
+  double xlow,xhigh;
+  f->GetRange(xlow,xhigh);
+  
+  TAxis *xax = hist->GetXaxis();
+  tpr.sum = hist->Integral(xax->FindBin(xlow),xax->FindBin(xhigh));
+  tpr.sumerr = 1/sqrt(tpr.sum);
+  
+  TF1 g("tempgaus","gaus",xlow,xhigh);
+  g.SetParameters(f->GetParameter(0),f->GetParameter(3),f->GetParameter(6));
+  tpr.content[0] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);  
+  tpr.height[0]  = g.GetParameter(0);
+  tpr.mean[0]  = g.GetParameter(1);
+  tpr.sigma[0]  = g.GetParameter(2);
+  tpr.cnterr[0] = sqrt(hist->Integral(xax->FindBin(tpr.mean[0]-3*tpr.sigma[0]),xax->FindBin(tpr.mean[0]+3*tpr.sigma[0])));  
+ 
+  g.SetParameters(f->GetParameter(1),f->GetParameter(4),f->GetParameter(6));
+  tpr.content[1] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);
+  tpr.height[1]  = g.GetParameter(0);
+  tpr.mean[1]  = g.GetParameter(1);
+  tpr.sigma[1]  = g.GetParameter(2);
+  tpr.cnterr[1] = sqrt(hist->Integral(xax->FindBin(tpr.mean[1]-3*tpr.sigma[1]),xax->FindBin(tpr.mean[1]+3*tpr.sigma[1])));  
+ 
+  g.SetParameters(f->GetParameter(2),f->GetParameter(5),f->GetParameter(6));
+  tpr.content[2] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);
+  tpr.height[2]  = g.GetParameter(0);
+  tpr.mean[2]  = g.GetParameter(1);
+  tpr.sigma[2]  = g.GetParameter(2);
+  tpr.cnterr[2] = sqrt(hist->Integral(xax->FindBin(tpr.mean[2]-3*tpr.sigma[2]),xax->FindBin(tpr.mean[2]+3*tpr.sigma[2]))); 
+ 
+  return tpr;
+}
+
 SteffenOptions *info;
 void ClearOptions(SteffenOptions *opt){
-	opt->infile        = "";
+  opt->infile        = "";
 	opt->outfile       = "";
 	opt->csfile 			 = "";				
 	opt->cntfile			 = "";	
 	opt->cnthist 			 = "";								
 	opt->badstripsfile = "";	
+  opt->A             = 0;
+  opt->BeamE         = 0; 
+	opt->TargetX       = 0.0;
+	opt->TargetY       = 0.0;
+	opt->TargetZ       = 0.0;
+	opt->TargetThick   = 0.0;	
 	opt->frame         = "";
-	opt->reaction      = "";
+	opt->reaction      = "";			
 	opt->Exc           = 0.;
 	opt->ExcLo         = 0.;
 	opt->ExcHi         = 0.;
@@ -183,9 +256,23 @@ void PrintOptions(SteffenOptions *opt){
 	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
 	msg.assign(Form("\n\t-> csfile        = ' %s ' ",opt->csfile.c_str()));
 	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
-	
-	msg.assign(Form("\n\t-> reaction      = ' %s ' ",opt->reaction.c_str()));
+	msg.assign(Form("\n\t-> badstripsfile = ' %s ' ",opt->badstripsfile.c_str()));
+	pt->AddText(msg.c_str()); printf("%s",msg.c_str());		
+
+	msg.assign(Form("\n\t-> A             =  %i  ",opt->A));
 	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+	msg.assign(Form("\n\t-> BeamE         =  %.1f ",opt->BeamE));
+	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+	msg.assign(Form("\n\t-> TargetX       =  %.1f ",opt->TargetX));
+	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+	msg.assign(Form("\n\t-> TargetY       =  %.1f ",opt->TargetY));
+	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+	msg.assign(Form("\n\t-> TargetZ       =  %.1f ",opt->TargetZ));
+	pt->AddText(msg.c_str()); printf("%s",msg.c_str());					
+	msg.assign(Form("\n\t-> TargetThick   =  %.2f ",opt->TargetThick));
+	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+	msg.assign(Form("\n\t-> reaction      = ' %s ' ",opt->reaction.c_str()));
+	pt->AddText(msg.c_str()); printf("%s",msg.c_str());			
 	msg.assign(Form("\n\t-> frame         = ' %s ' ",opt->frame.c_str()));	
 	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
 	msg.assign(Form("\n\t-> Exc Energy    = %.2f ",opt->Exc));
@@ -228,7 +315,13 @@ void PrintOptions(SteffenOptions *opt){
   
 	if(opt->fit){
 		msg.assign(Form("\n\t-> Fit           = %s ",opt->fit?"TRUE":"FALSE"));	
-		pt->AddText(msg.c_str()); printf("%s",msg.c_str());				
+		pt->AddText(msg.c_str()); printf("%s",msg.c_str());			
+		if(opt->FitPeakMean.size()==3){
+      msg.assign(Form("\n\t-> FitPeakMean   = %.1f\t%.1f\t%.1f ",opt->FitPeakMean[0],opt->FitPeakMean[1],opt->FitPeakMean[2]));	
+      pt->AddText(msg.c_str()); printf("%s",msg.c_str());				
+      msg.assign(Form("\n\t-> FitPeakSigma  = %.1f ",opt->FitPeakSigma));	
+      pt->AddText(msg.c_str()); printf("%s",msg.c_str());					
+		}
 	}
 	
 	if(opt->cntfile.length() && opt->cnthist.length()){
@@ -290,9 +383,50 @@ TH1D *MakeCountsHist(TH2F *, TList *);
 Bool_t ExtractCounts(TH1D *, Double_t, UInt_t, UInt_t, Double_t&, Double_t&);
 Double_t PolBg(Double_t *x, Double_t *par);
 
+
+Bool_t ScanEnergyWindow(Double_t exc, Int_t ex_min, Int_t ex_max, Int_t ex_step, Double_t ex_lo=0);
 TH1D *AngularDistribution(std::string);
 Bool_t InitVars(std::string);
 
+
+Bool_t ScanEnergyWindow(Double_t exc, Int_t ex_min, Int_t ex_max, Int_t ex_step, Double_t ex_lo){
+
+  Double_t ex_hi;
+  for(int i=ex_min; i<=ex_max; i+=ex_step){
+  
+    std::string template_name = Form("Input_%.0f.txt",exc);
+    std::ifstream file_tmp(template_name);
+    if(!file_tmp.is_open()){
+      printf("\n\t Error :  Couldn't find input file ' %s '\n\n",template_name.c_str());
+      return false;
+    }  
+  
+    ex_hi = (double)i;
+    
+    std::string input_name = Form("Input_%.0f_ExcHi.txt",exc);
+    std::ofstream options_file(input_name);
+  
+    std::string line;
+    while (std::getline(file_tmp, line)) {
+    
+      if(line.find("OUTFILE:")!=npos) // set root file
+        line.assign(Form("OUTFILE: Results_%.0f_ExcHi%.0f.root",exc,ex_hi));
+      if(line.find("CSFILE:")!=npos)  // set angdist file
+        line.assign(Form("CSFILE: AngDist_%.0f_ExcHi%.0f.txt",exc,ex_hi));		  
+      if(line.find("EXCHI:")!=npos)   // set ExcHi
+        line.assign(Form("EXCHI: %.0f",ex_hi));			  	
+      if(line.find("EXCLO:")!=npos && ex_lo)
+        line.assign(Form("EXCLO: %.0f",ex_lo));			  	
+      
+      options_file << line << "\n";
+    }
+
+    options_file.close();
+    AngularDistribution(input_name.c_str()); // extract angular distribution
+  }
+
+  return true;
+}
 
 TH1D *AngularDistribution(std::string OptionsFile){
 
@@ -314,7 +448,7 @@ TH1D *AngularDistribution(std::string OptionsFile){
 	// rebin theta & energy, and zoom into energy range
 	hexctheta->RebinX(info->ThetaBinSz);
 	hexctheta->RebinY(info->ExcBinSz/hexctheta->GetYaxis()->GetBinWidth(0));	
-	hexctheta->GetYaxis()->SetRangeUser(info->Exc-1000.,info->Exc+1200.);
+	hexctheta->GetYaxis()->SetRangeUser(info->Exc-1000.,info->Exc+2000.);
 		
 		
 	// counts  ////////////////////////////////////////////////////////////			
@@ -444,15 +578,15 @@ Bool_t InitVars(std::string OptionsFile){
 	info = SetOptions(OptionsFile);
 	PrintOptions(info);		
 
-	gStyle->SetOptFit(0112);
+	//gStyle->SetOptFit(0112);
 						
 	TReaction *r;
 	if(info->reaction.find("dp")!=npos){
-		r = new TReaction("sr95","d","p","sr96",510.9,0,true);
+		r = new TReaction(Form("sr%i",info->A),"d","p",Form("sr%i",info->A+1),info->BeamE,0,true);
 	} else if(info->reaction.find("pp")!=npos){
-		r = new TReaction("sr95","p","p","sr95",510.9,0,true); 
+		r = new TReaction(Form("sr%i",info->A),"p","p",Form("sr%i",info->A),info->BeamE,0,true); 
 	} else if(info->reaction.find("dd")!=npos){
-		r = new TReaction("sr95","d","d","sr95",510.9,0,true); 
+		r = new TReaction(Form("sr%i",info->A),"d","d",Form("sr%i",info->A),info->BeamE,0,true); 
 	} else{
 		printf("\nReaction type '%s' not recognised. Fail. \n\n",info->reaction.c_str());
 		return 0;
@@ -461,10 +595,10 @@ Bool_t InitVars(std::string OptionsFile){
 	printf("\n\n Frame ' %s ' Will Be Calculated\n",info->frame.c_str());
 	
 	// get acceptance correction with dead strips
-	TSharcAnalysis::SetTarget(0.0,0.0,0.0,4.5,"cd2",0.5,0.5,0.5);
-	const char *stripsfile = "/Users/steffencruz/Desktop/Steffen/Work/PhD/TRIUMF/CodesAndTools/SharcAnalysis/BadStrips.txt";
+	TSharcAnalysis::SetTarget(info->TargetX,info->TargetY,info->TargetZ,info->TargetThick,"cd2",0.5,0.5,0.5);
+	//const char *stripsfile = "/Users/steffencruz/Desktop/Steffen/Work/PhD/TRIUMF/CodesAndTools/SharcAnalysis/BadStrips.txt";
 	
-	acclist = TSharcAnalysis::GetAcceptanceList(r,stripsfile,30); // high resolution
+	acclist = TSharcAnalysis::GetAcceptanceList(r,info->badstripsfile.c_str(),30); // high resolution
   
 	// get exc theta mat
 	TFile *file = new TFile(info->infile.c_str(),"READ"); // NO BEAM	
@@ -694,9 +828,22 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
 
 	if(info->fit){ // if fit is selected, do a pol1+gaus fit
 	
+    if(info->FitPeakMean.size()==3){
+      std::vector<double> mean = info->FitPeakMean;
+     
+      TF1 *peakfit = DoTripleGausFit(h,xmin,xmax,mean[0],mean[1],mean[2],info->FitPeakSigma);
+      
+      TriplePeakResults res = GetTripleFitResults(h);
+      res.Print();
+      counts = res.content[0];
+      err = res.cnterr[0];	      
+      return true;
+    }
+
 		printf("\n\t  FULL FIT   * Spectrum will be fitted with a pol1 + gaus function *");
 		const char *gform = "[0]/(sqrt(2*3.14159)*[2])*exp(-pow(x-[1],2.0)/(2*[2]*[2]))";
-		TF1 *peakfit = new TF1("peak_fit",Form("%s+[3]+[4]*x",gform),xmin,xmax);
+		TF1 *peakfit = new TF1("peak_fit",Form("%s+[3]+[4]*x",gform),info->Exc-1000,info->Exc+1000);//xmin,xmax);
+		peakfit->SetLineWidth(1);
 		peakfit->SetNpx(1000);
 		
 		peakfit->SetParNames("peak_content","peak_mean","peak_sigma","bg_const","bg_linear");
@@ -715,9 +862,10 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
 			return false;
 		} 
 		
-		TF1 *gaus = new TF1("gaus",gform,info->Exc-1000,info->Exc+1000);
+		TF1 *gaus = new TF1("gaus",gform,info->Exc-2*info->ExcSig,info->Exc+2*info->ExcSig);
 		gaus->SetParameters(peakfit->GetParameter(0),peakfit->GetParameter(1),peakfit->GetParameter(2));
-		
+
+		gaus->SetLineWidth(1);		
 		gaus->SetLineColor(kGreen);
 		h->GetListOfFunctions()->Add(gaus);
 		
@@ -868,6 +1016,24 @@ SteffenOptions *SetOptions(std::string OptionsFile) {
 			 info->cnthist = line;  			 
 		} else if(type.compare("BADSTRIPSFILE")==0) {
 			 info->badstripsfile = line;
+		} else if(type.compare("A")==0) {
+			int tempd; ss>>tempd;
+			 info->A = tempd;			 
+		} else if(type.compare("BEAME")==0) {
+			double tempd; ss>>tempd;
+			 info->BeamE = tempd;
+		} else if(type.compare("TARGPOS")==0) {
+			 double value;
+			 std::vector<double> tempvec;
+			 while (ss >> value) {   tempvec.push_back(value); }
+			 if(tempvec.size()==3) {
+					info->TargetX = tempvec.at(0);
+					info->TargetY = tempvec.at(1);
+					info->TargetZ = tempvec.at(2);					
+			 } 
+		} else if(type.compare("TARGTHICK")==0) {
+			double tempd; ss>>tempd;
+			 info->TargetThick = tempd;			  	 
 		} else if(type.compare("FRAME")==0) {
 			 info->frame = line;		 
 		} else if(type.compare("REACTION")==0) {
@@ -934,6 +1100,15 @@ SteffenOptions *SetOptions(std::string OptionsFile) {
 		} else if(type.compare("FIT")==0) {
 			 if(strcmp(line.c_str(),"TRUE")==0)
 			 	info->fit = true; 			 
+	  } else if(type.compare("FITPEAKMEAN")==0) { // 3 NUMBERS
+			 double value;
+			 std::vector<double> tempvec;
+			 while (ss >> value) {   tempvec.push_back(value); }
+			 if(tempvec.size()==3) 
+					info->FitPeakMean = tempvec;	  		 	
+	  } else if(type.compare("FITPEAKSIGMA")==0) { // 1 NUMBER
+			 double value; ss >> value;
+			 info->FitPeakSigma = value; 
 		} else if(type.compare("BGSPEC")==0) {
 			 double value;
 			 std::vector<double> tempvec;
@@ -952,6 +1127,12 @@ SteffenOptions *SetOptions(std::string OptionsFile) {
   	printf("\n\t Error : Counts cannot be manually specified without a CNTFILE to read from.\n");
 		ClearOptions(info);  	
 	}
+	
+	if(info->FitPeakMean.size()==3 && info->FitPeakSigma==0){
+  	printf("\n\t Error : Number of fit peak means must be 3 AND SIGMA MUST BE SPECIFIED.\n");
+		ClearOptions(info);  	
+	}	
+
 	return info;
 }
                                                    
