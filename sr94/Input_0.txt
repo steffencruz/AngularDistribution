@@ -1,6 +1,6 @@
 INFILE: Results_Sr94.root
-OUTFILE: Results_sr94_dp0.root
-CSFILE: AngDist_sr94_dp0.txt
+OUTFILE: Results_dp0.root
+CSFILE: AngDist_dp0.txt
 
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
 A:         94

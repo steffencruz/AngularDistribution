@@ -377,12 +377,9 @@ Int_t GetIndex(Double_t theta, std::vector<double> v){
 	return -1;		
 }
 TH1D *MakeScaleHist(Double_t binsz, Double_t scale, Double_t err, const char *name);
-
 TH1D *MakeCountsHist(TH2F *, TList *);
-
 Bool_t ExtractCounts(TH1D *, Double_t, UInt_t, UInt_t, Double_t&, Double_t&);
 Double_t PolBg(Double_t *x, Double_t *par);
-
 
 Bool_t ScanEnergyWindow(Double_t exc, Int_t ex_min, Int_t ex_max, Int_t ex_step, Double_t ex_lo=0);
 TH1D *AngularDistribution(std::string);
@@ -570,7 +567,6 @@ TH1D *AngularDistribution(std::string OptionsFile){
 	return hsigma;
 }
 
-
 Bool_t InitVars(std::string OptionsFile){
 	
 	list = new TList;
@@ -661,7 +657,6 @@ Bool_t InitVars(std::string OptionsFile){
 	
   return true;
 }
-
 
 TH1D *MakeCountsHist(TH2F *h2, TList *list2){
 	
@@ -760,7 +755,6 @@ TH1D *MakeCountsHist(TH2F *h2, TList *list2){
 	return hcounts;
 }
 
-
 Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double_t& counts, Double_t& err){
 	
 	counts = h->Integral(binlo,binhi);
@@ -831,7 +825,7 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
     if(info->FitPeakMean.size()==3){
       std::vector<double> mean = info->FitPeakMean;
      
-      TF1 *peakfit = DoTripleGausFit(h,xmin,xmax,mean[0],mean[1],mean[2],info->FitPeakSigma);
+      TF1 *peakfit = DoTripleGausFit(h,-1500,2000,mean[0],mean[1],mean[2],info->FitPeakSigma);
       
       TriplePeakResults res = GetTripleFitResults(h);
       res.Print();
