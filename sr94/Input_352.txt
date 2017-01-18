@@ -1,28 +1,51 @@
-INFILE: Results_Sr94.root
-OUTFILE: Results_sr94_dp352.root
-CSFILE: AngDist_sr94_dp352.txt
+INFILE: $TAD/Results_Sr94.root
+OUTFILE: Results_dp352_gam.root
+CSFILE: AngDist_dp352_gam.txt
 
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
+
 A:         94
 BEAME:     500      // in middle of target, MeV
-TARGPOS:   0 0 -1   // Z = -1.0 mm
+TARGPOS:   0 0 0    // Z = 0.0 mm
 TARGTHICK: 5.0      // 5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 0.02147	0.00010
+NORMALIZATION: 0.0222	0.0001
 
 EXC: 				352
+EXCLO:      -52
+EXCHI:       752
 
 GAM: 				352
-GAMPEAK:    340 365
-GAMBGLO:    300 315
-GAMBGHI:    365 380
+GAMPEAK:    340 360
+GAMBGLO:    300 320
+GAMBGHI:    360 380
+
+TIGEFFDATA:    AddbackEfficiencyData2013.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.20  0.1        // Eff @ 1121.1 keV = (9.2+/-0.1)%
+NNDCDATA:      Sr95_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0
-GAMBINSZ:   1.0
-THETABINSZ: 4.0
+GAMBINSZ:   1.0 // kev per bin
+THETABINSZ: 5.0
 MAXRELERR:  1.5
 
 //THETARNG: true    
 
+//bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+
+BGSPEC: 		12.5 		    0     0     0	    0       // REJECT
+
+BGSPEC: 		57.5 		    0     0     0	    0       // REJECT
+BGSPEC: 		62.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		67.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		72.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		77.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		82.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		87.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		92.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		97.5 		 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		102.5 	 -2500 	-450  450	  1500      // DBOX
+BGSPEC: 		107.5 	   0     0     0	    0       // REJECT
+BGSPEC: 		112.5 	   0     0     0	    0       // REJECT

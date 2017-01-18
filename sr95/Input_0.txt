@@ -1,57 +1,68 @@
-INFILE: Results_RedwoodMats.root
-OUTFILE: Results_0.root
-CSFILE: AngDist_0.txt
+INFILE: $TAD/Results_Sr95.root
+OUTFILE: Results_dp0.root
+CSFILE: AngDist_dp0.txt
+
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9     // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
 
 FRAME:     Cm
 REACTION:	 dp
 
 EXC: 				0
 GAM: 				0
-//NORMALIZATION: 8.8e-4 0.1e-4
-NORMALIZATION: 7.93e-4 0.07e-4
-
+NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
 EXCBINSZ: 	40.0
 THETABINSZ: 2.0
 
+EXPBG:    TRUE
+
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const lin quad
 
-BGSPEC: 		3			 -880 	-450 		560 	600  	   // UQQQ
-BGSPEC: 		5			 -700	 	-450 		450 	650  	   // UQQQ
-BGSPEC: 		7			 -700	 	-450 		450 	650  	   // UQQQ
-BGSPEC: 		9			 -750	 	-450 		450 	600  	   // UQQQ
-BGSPEC: 		11		 -750	 	-450 		450 	600  	   // UQQQ
-BGSPEC: 		13		 -550	 	-450 		400 	500  	   // UQQQ
-BGSPEC: 		17		 -550	 	-450 		450 	600  	   // UQQQ
-BGSPEC: 		19		 -550		-450 		450 	550  	   // UQQQ
+BGSPEC: 		3			 -2000 	-400 		450 	1000  	   // UQQQ
+BGSPEC: 		5			 -1500 	-450 		450 	900  	   // UQQQ
+BGSPEC: 		7			 -1500 	-450 		450 	900  	   // UQQQ
+BGSPEC: 		9			 -1500 	-450 		450 	900  	   // UQQQ
+BGSPEC: 		11		 -1500 	-450 		450 	900  	   // UQQQ
+BGSPEC: 		13		 -1500	-450 		400 	900  	   // UQQQ
+BGSPEC: 		17		 -1500 	-450 		450 	900  	   // UQQQ
+BGSPEC: 		19		 -1500	-450 		450 	900  	   // UQQQ
 
-BGSPEC: 		21		 -500		-400 		450 	600  	   // UBOX
-BGSPEC: 		23		 -500		-400 		450 	600  	   // UBOX
-BGSPEC: 		25		 -500		-400 		450 	600  	   // UBOX
-BGSPEC: 		27		 -500		-400 		450 	600  	   // UBOX
-BGSPEC: 		29		 -500		-350 		500 	600  	   // UBOX
-BGSPEC: 		31		 -500		-400 		450 	650  	   // UBOX
-BGSPEC: 		33		 -600		-400 		400 	600  	   // UBOX
-BGSPEC: 		35		 -500		-400 		400 	600  	   // UBOX
-BGSPEC: 		37		 -500		-400 		400 	600  	   // UBOX
-BGSPEC: 		39		 -500		-400 		400 	600  	   // UBOX
-BGSPEC: 		41		 -500		-400 		400 	600  	   // UBOX
-BGSPEC: 		43		 -500		-400 		400 	600  	   // UBOX
-BGSPEC: 		45		 -800		-400 		400 	650  	   // UBOX
-BGSPEC: 		47		 -400		-350 		600 	700  	   // UBOX
+BGSPEC: 		21		 -1500	-400 		450 	1000 	   // UBOX
+BGSPEC: 		23		 -1500	-400 		450 	1000 	   // UBOX
+BGSPEC: 		25		 -1500	-400 		450 	1000 	   // UBOX
+BGSPEC: 		27		 -1500	-400 		450 	1000 	   // UBOX
+BGSPEC: 		29		 -1500	-350 		500 	1000 	   // UBOX
+BGSPEC: 		31		 -1500	-400 		450 	1000 	   // UBOX
+BGSPEC: 		33		 -1500	-400 		400 	1000 	   // UBOX
+BGSPEC: 		35		 -1500	-400 		400 	1000 	   // UBOX
+BGSPEC: 		37		 -1500	-400 		400 	1000 	   // UBOX
+BGSPEC: 		39		 -1500	-400 		400 	1000 	   // UBOX
+BGSPEC: 		41		 -1500	-400 		500 	1000 	   // UBOX
+BGSPEC: 		43		 -1500	-400 		400 	1000	   // UBOX
+BGSPEC: 		45		 -1500	-400 		400 	1000 	   // UBOX
+BGSPEC: 		47		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		49		 	 0 			0 		0			0 		   // REJECT
 
-BGSPEC: 		63		   0  		0 	  0  	   0        // REJECT
-BGSPEC: 		65		 -1000	-800 		200 	400  	   // DBOX
-BGSPEC: 		67		 -1000	-800 		200 	400  	   // DBOX
-BGSPEC: 		69		 -1000	-800 		200 	400  	   // DBOX
-BGSPEC: 		71		 -1000	-800 		200 	400  	   // DBOX
-BGSPEC: 		73		 -1000	-800 		200 	400  	   // DBOX
-BGSPEC: 		75		 -1000	-800 		200 	450  	   // DBOX
-BGSPEC: 		77		 -1000	-800 		200 	450  	   // DBOX
-BGSPEC: 		79		 -1000	-800 		200 	400  	   // DBOX
-BGSPEC: 		81		 -1000	-800 		200 	400  	   // DBOX
-BGSPEC: 		83		 -1000	-800 		200 	300  	   // DBOX
-BGSPEC: 		85		 -1000	-800 		250 	350  	   // DBOX
+BGSPEC: 		59		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		61		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		63		   0  		0 	  0  	  0        // REJECT
+BGSPEC: 		65		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		67		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		69		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		71		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		73		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		75		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		77		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		79		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		81		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		83		 -2000	-800 		200 	1500     // DBOX
+BGSPEC: 		85		 -2000	-800 		250 	1500     // DBOX
+
 // get rid of all angles greater than 85 degrees, we don't have data past this
 BGSPEC: 		87		 	 0 			0 		0			0 		   // REJECT
 BGSPEC: 		89		 	 0 			0 		0			0 		   // REJECT
@@ -61,3 +72,12 @@ BGSPEC: 		95		 	 0 			0 		0			0 		   // REJECT
 BGSPEC: 		97		 	 0 			0 		0			0 		   // REJECT
 BGSPEC: 		99		 	 0 			0 		0			0 		   // REJECT
 BGSPEC: 		101		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		103		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		105		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		107		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		109		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		111		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		113		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		115		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		117		 	 0 			0 		0			0 		   // REJECT
+BGSPEC: 		119		 	 0 			0 		0			0 		   // REJECT

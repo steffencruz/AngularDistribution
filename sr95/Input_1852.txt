@@ -1,21 +1,32 @@
-INFILE: Results_RedwoodMats.root
-OUTFILE: Results_1852.root
-CSFILE: AngDist_1852.txt							// angular distribution output file
+INFILE: $TAD/Results_Sr95.root
+OUTFILE: Results_dp1852.root
+CSFILE: AngDist_dp1852.txt
 
-FRAME:     	Cm
-REACTION:		dp
-NORMALIZATION: 7.93e-4 0.07e-4
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9     // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dp
+NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
 EXC: 				1852
 
 GAM: 		 		1037
-GAMPEAK: 		1025 1050
-GAMBGLO:	 	1000 1025 
-GAMBGHI:	 	1050 1080
+GAMPEAK: 		1020 1060
+GAMBGLO:	 	1000 1020
+GAMBGHI:	 	1060 1080
+
+TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0
 GAMBINSZ:   1.0
-THETABINSZ: 10.0
+THETABINSZ: 5.0
+
 
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 

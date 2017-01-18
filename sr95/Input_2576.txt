@@ -1,27 +1,58 @@
-INFILE: Results_RedwoodMats.root
-OUTFILE: Results_2576.root
-CSFILE: AngDist_2576.txt
+INFILE: $TAD/Results_Sr95.root
+OUTFILE: Results_dp2576.root
+CSFILE: AngDist_dp2576.txt
 
-FRAME:     	Cm
-REACTION:		dp
-NORMALIZATION: 7.93e-4 0.07e-4
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9    // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dp
+NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
 EXC: 				2576
-EXCSIGMA:	 	240
+//EXCSIGMA:	 	240
 
 GAM: 		 		1761
-GAMPEAK: 		1738 1780
-GAMBGLO:	 	1695 1725
+GAMPEAK: 		1745 1785
+GAMBGLO:	 	1695 1735
 GAMBGHI:	 	1795 1830
 
+TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
+
 EXCBINSZ: 	40.0
-GAMBINSZ:   1.0
+GAMBINSZ:   1.0 // kev per bin
 THETABINSZ: 5.0
+MAXRELERR:  1.5
 
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 
-//BGSPEC: 		2.5				0			0			0 		0  				// REJECT
-//BGSPEC: 		7.5				0			0			0 		0  				// REJECT
-//BGSPEC:     12.5     2100  2150  3100   3150      // UQQQ
-//BGSPEC: 		47.5			0			0			0 		0  				// REJECT
+BGSPEC: 		12.5				0			0			0 		0  				// REJECT
 
+BGSPEC: 		17.5			1000	2100	3100 	4000  			// UBOX
+BGSPEC: 		22.5			1000	2100	3100 	4000  			// UBOX
+BGSPEC: 		27.5			1000	2100	3100 	4000  			// UBOX
+BGSPEC: 		32.5			1000	2100	3100 	4000  			// UBOX
+BGSPEC: 		37.5			1000	2100	3100 	4000  			// UBOX
+
+BGSPEC: 		42.5		  	0     0     0     0 			  // REJECT
+BGSPEC: 		52.5			  0     0     0     0 			  // REJECT
+BGSPEC: 		57.5			  0     0     0     0 			  // REJECT
+
+BGSPEC: 		62.5			1000	1800	2800 	4000  			// DBOX
+BGSPEC: 		67.5			1000	1800	2800 	4000  			// DBOX
+BGSPEC: 		72.5			1000	1800	2800 	4000  			// DBOX
+BGSPEC: 		77.5			1000	1800	2800 	4000  			// DBOX
+BGSPEC: 		82.5			1000	1800	2800 	4000  			// DBOX
+BGSPEC: 		87.5			1000	1800	2800 	4000  			// DBOX
+BGSPEC: 		92.5			1000	1800	2800 	4000  			// DBOX
+BGSPEC: 		97.5			1000	1800	2800 	4000  			// DBOX
+
+BGSPEC: 		102.5 		  0     0     0     0 			  // REJECT
+BGSPEC: 		107.5 		  0     0     0     0 			  // REJECT
+BGSPEC: 		112.5 		  0     0     0     0 			  // REJECT
+BGSPEC: 		117.5 		  0     0     0     0 			  // REJECT

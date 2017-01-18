@@ -1,24 +1,116 @@
-INFILE: Results_Sr94_Elastics.root
-OUTFILE: Results_sr94_dd.root
-CSFILE: AngDist_sr94_dd.txt
+INFILE: $TAD/Results_Sr94.root
+OUTFILE: Results_dd.root
+CSFILE: AngDist_dd.txt
 
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
 A:         94
 BEAME:     500      // in middle of target, MeV
-TARGPOS:   0 0 -1   // Z = -1.0 mm
+TARGPOS:   0 0 0   // Z = 0.0 mm
 TARGTHICK: 5.0      // 5 um
 
 FRAME:     Cm
 REACTION:	 dd
 
 EXC: 				0
-EXCSIG:			350
+EXC: 				0
+EXCLO:			-1000
+EXCHI:			1000
 
 GAM: 				0
 NORMALIZATION: 1.0
 
-EXCBINSZ: 	20.0
+EXCBINSZ: 	40.0
 THETABINSZ: 1.0
 MAXRELERR:  1.0
 
-FIT:				TRUE
+FIT:				FALSE
+
+// user specified counts from another file
+CNTFILE: FittedSlices_DeutCombined.root //FittedSlices.root 
+CNTHIST: AverageCounts 									//DeutCounts_1DegCm
+
+COUNTSPEC: 	29.5	 
+COUNTSPEC: 	30.5	 
+COUNTSPEC: 	31.5	 
+COUNTSPEC: 	32.5	 
+COUNTSPEC: 	33.5	 
+COUNTSPEC: 	34.5	 
+COUNTSPEC: 	35.5	 
+COUNTSPEC: 	36.5	 
+COUNTSPEC: 	37.5	 
+COUNTSPEC: 	38.5	 
+COUNTSPEC: 	39.5	 
+COUNTSPEC: 	40.5	 
+COUNTSPEC: 	41.5	 
+COUNTSPEC: 	42.5	 
+COUNTSPEC: 	43.5	 
+
+BGSPEC: 		44.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		45.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		46.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		47.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		48.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		49.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		50.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		51.5		   0  		0 	  0  	   0        // REJECT
+
+BGSPEC: 		52.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		53.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		54.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		55.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		56.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		57.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		58.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		59.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		60.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		61.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		62.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		63.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		64.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		65.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		66.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		67.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		68.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		69.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		70.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		71.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		72.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		73.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		74.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		75.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		76.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		77.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		78.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		79.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		80.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		81.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		82.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		83.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		84.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		85.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		86.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		87.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		88.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		89.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		90.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		91.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		92.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		93.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		94.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		95.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		96.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		97.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		98.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		99.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		100.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		101.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		102.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		103.5		 -1500  -1000  1000  	2500        // DBOX
+BGSPEC: 		104.5		 -1500  -1000  1000  	2500        // DBOX
+
+BGSPEC: 		105.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		106.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		107.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		108.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		109.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		110.5		 0  		0 	  0  	   0        // REJECT

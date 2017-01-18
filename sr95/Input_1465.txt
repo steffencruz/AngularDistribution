@@ -1,22 +1,40 @@
-INFILE: Results_RedwoodMats_TigTheta135.root
-OUTFILE: Results_1465.root					
-CSFILE: AngDist_1465.txt							// angular distribution output file
+INFILE: $TAD/Results_Sr95.root
+OUTFILE: Results_dp1465.root
+CSFILE: AngDist_dp1465.txt
 
-FRAME:     	Cm
-REACTION:		dp
-NORMALIZATION: 7.93e-4 0.07e-4
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9     // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dp
+NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
 EXC: 				1465
+EXCLO:      1060
+EXCHI:      1860
 
 GAM: 		 		650
-GAMPEAK: 		625 655
-GAMBGLO:	 	615 625 
-GAMBGHI:	 	655 665
+GAMPEAK: 		630 655
+GAMBGLO:	 	620 630 
+GAMBGHI:	 	655 675
+
+TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0
-GAMBINSZ:   1.0
+GAMBINSZ:   1.0 // kev per bin
 THETABINSZ: 4.0
+MAXRELERR:  2.5
 
 //bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+
+BGSPEC:			94   			0			0			0			0		 			// REJECT
+BGSPEC:			98   			0			0			0			0		 			// REJECT
+BGSPEC:			102 			0			0			0			0		 			// REJECT
+BGSPEC:			106 			0			0			0			0		 			// REJECT
 
 

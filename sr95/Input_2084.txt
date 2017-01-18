@@ -1,43 +1,89 @@
-INFILE: Results_RedwoodMats.root
-OUTFILE: Results_2084.root
-CSFILE: AngDist_2084.txt
+INFILE: $TAD/Results_Sr95.root
+OUTFILE: Results_dp2084.root
+CSFILE: AngDist_dp2084.txt
 
-FRAME:     	Cm
-REACTION:		dp
-NORMALIZATION: 7.93e-4 0.07e-4
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9     // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dp
+NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
 EXC: 				2084
 
 GAM: 		 		2084
-GAMPEAK: 		2050 2100
-GAMBGLO:	 	2010 2040 
-GAMBGHI:	 	2110 2140
+GAMPEAK: 		2050 2110
+GAMBGLO:	 	2000 2050 
+GAMBGHI:	 	2110 2150
+
+TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0
-GAMBINSZ:   1.0
-THETABINSZ: 5.0
+GAMBINSZ:   1.0 // kev per bin
+THETABINSZ: 3.0
+MAXRELERR:  1.5
 
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 
-//BGSPEC: 		2.5				1400	1700	2500	2600  		// UQQQ
-//BGSPEC: 		7.5				1400	1700	2500	2600  		// UQQQ
-//BGSPEC: 		12.5			1400	1700	2500	2600 		 	// UQQQ
-//BGSPEC: 		17.5			1400	1700	2500	2600  		// UQQQ
-//BGSPEC: 		22.5			1500	1700	2500	2700  		// UBOX
-//BGSPEC: 		27.5			1500	1700	2500	2700  		// UBOX
-//BGSPEC: 		32.5			1500	1700	2500	2700  		// UBOX
-//BGSPEC: 		37.5			1500	1700	2800	2900  		// UBOX
-//BGSPEC: 		42.5			1500	1700	2800	2900  		// UBOX
-//BGSPEC: 		47.5		 	0			0			0 		0  				// REJECT
-//BGSPEC: 		62.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		67.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		72.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		77.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		82.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		87.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		92.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		97.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		102.5			1300	1400	2700 	2800  		// DBOX
-//BGSPEC: 		107.5			0			0			0 		0  				// REJECT
-//BGSPEC: 		112.5			0			0			0 		0  				// REJECT
-//BGSPEC: 		117.5			0			0			0 		0  				// REJECT
+BGSPEC:			13.5   			0			0			0			0		 			// REJECT
+
+BGSPEC:			40.5   		1000  1300  2500  2800	 			// UBOX
+
+BGSPEC:			43.5   			0			0			0			0		 			// REJECT
+BGSPEC:			46.5   			0			0			0			0		 			// REJECT
+BGSPEC:			55.5   			0			0			0			0		 			// REJECT
+BGSPEC:			58.5   			0			0			0			0		 			// REJECT
+BGSPEC:			61.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			64.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			67.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			70.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			73.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			76.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			79.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			82.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			85.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			88.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			91.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			94.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			97.5   		1000  1400  2600  2800		 		// DBOX
+BGSPEC:			100.5   	  0     0     0     0	  	 		// REJECT
+BGSPEC:			103.5   	  0     0     0     0	  	 		// REJECT
+BGSPEC:			106.5   	  0     0     0     0	  	 		// REJECT
+BGSPEC:			109.5   	  0     0     0     0	  	 		// REJECT
+BGSPEC:			112.5   	  0     0     0     0	  	 		// REJECT
+BGSPEC:			115.5   	  0     0     0     0	  	 		// REJECT
+
+
+//BGSPEC:			6   		1000	1600  2600	 2700		 		// UQQQ
+//BGSPEC:			10   		1000	1600  2600	 2700		 		// UQQQ
+//BGSPEC:			14   		  0   	0     0 	 0   		 		// REJECT
+//BGSPEC:			18   		1000	1600  2700	 2800		 		// UBOX
+//BGSPEC:			22   		1000	1600  2700	 2800		 		// UBOX
+//BGSPEC:			26   		1000	1600  2700	 2800		 		// UBOX
+//BGSPEC:			30   		1000	1600  2700	 2800		 		// UBOX
+//BGSPEC:			34   		1000	1600  2700	 2800		 		// UBOX
+//BGSPEC:			38   		1000	1600  2700	 2800		 		// UBOX
+//BGSPEC:			42   		1000	1600  2700	 2800		 		// UBOX
+//BGSPEC:			46   			0			0			0			0		 			// REJECT
+//BGSPEC:			54   			0			0			0			0		 			// REJECT
+//BGSPEC:			58   			0			0			0			0		 			// REJECT
+//BGSPEC:			62   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			66   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			70   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			74   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			78   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			82   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			86   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			90   		1000  1400  2600  2800		 		// DBOX
+//BGSPEC:			94   			0			0			0			0		 			// REJECT
+//BGSPEC:			98   			0			0			0			0		 			// REJECT
+//BGSPEC:			102  			0			0			0			0		 			// REJECT
+//BGSPEC:			106  			0			0			0			0		 			// REJECT
+//BGSPEC:			110  			0			0			0			0		 			// REJECT
+//BGSPEC:			114  			0			0			0			0		 			// REJECT
+

@@ -1,10 +1,17 @@
-INFILE: Results_RedwoodMats.root
-OUTFILE: Results_2113.root
-CSFILE: AngDist_2113.txt
+INFILE: $TAD/Results_Sr95.root
+OUTFILE: Results_dp2113.root
+CSFILE: AngDist_dp2113.txt
 
-FRAME:     	Cm
-REACTION:		dp
-NORMALIZATION: 7.93e-4 0.07e-4
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9     // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dp
+NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
 EXC: 				2113
 
@@ -18,9 +25,13 @@ GAMPEAK: 		472 492
 GAMBGLO:	 	462 472 
 GAMBGHI:	 	492 502
 
+TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
+
 EXCBINSZ: 	40.0
-GAMBINSZ:   1.0
+GAMBINSZ:   1.0 // kev per bin
 THETABINSZ: 5.0
+MAXRELERR:  1.5
 
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 

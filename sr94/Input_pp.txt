@@ -5,7 +5,7 @@ CSFILE: AngDist_sr94_pp.txt
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
 A:         94
 BEAME:     500      // in middle of target, MeV
-TARGPOS:   0 0 -1   // Z = -1.0 mm
+TARGPOS:   0 0 0   // Z = 0.0 mm
 TARGTHICK: 5.0      // 5 um
 
 FRAME:     Cm

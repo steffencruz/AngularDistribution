@@ -1,23 +1,21 @@
-INFILE: Results_Sr94.root
-OUTFILE: Results_dp0.root
-CSFILE: AngDist_dp0.txt
+INFILE: $TAD/Results_Sr94.root
+OUTFILE: Results_dp0_fit.root
+CSFILE: AngDist_dp0_fit.txt
 
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
+
 A:         94
 BEAME:     500      // in middle of target, MeV
-TARGPOS:   0 0 -1   // Z = -1.0 mm
+TARGPOS:   0 0 0    // Z = 0.0 mm
 TARGTHICK: 5.0      // 5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 0.02147	0.00010
+NORMALIZATION: 0.0222	0.0001
 
 EXC: 				0
-EXCLO:      -1000
-EXCHI:      2000
 
 EXCBINSZ: 	40.0
-GAMBINSZ:   1.0
 THETABINSZ: 4.0
 MAXRELERR:  1.5
 
@@ -29,13 +27,32 @@ FITPEAKSIGMA: 150
 
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const lin quad
 
-BGSPEC: 		2		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		2	  	   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		6 		 -2500 	-2000  1200	  1500      // UQQQ
+BGSPEC: 		10 		 -2500 	-2000  1200	  1500      // UQQQ
+BGSPEC: 		14 		 -2500 	-2000  1200	  1500      // UQQQ
+BGSPEC: 		18 		 -2500 	-2000  1200	  1500      // UQQQ
+BGSPEC: 		22 		 -2500 	-2000  1400	  1500      // UQQQ
 
+BGSPEC: 		26 		 -2500 	-2000  2500	  3000      // UBOX
+BGSPEC: 		30 		 -2500 	-2000  2500	  3000      // UBOX
+BGSPEC: 		34 		 -2500 	-2000  2500	  3000      // UBOX
+BGSPEC: 		38 		 -2500 	-2000  2500	  3000      // UBOX
+BGSPEC: 		42 		 -2500 	-2000  2500	  3000      // UBOX
 BGSPEC: 		46		   0  		0 	  0  	   0        // REJECT
 BGSPEC: 		50		   0  		0 	  0  	   0        // REJECT
 BGSPEC: 		54		   0  		0 	  0  	   0        // REJECT
 BGSPEC: 		58		   0  		0 	  0  	   0        // REJECT
 
+BGSPEC: 		62 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		66 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		70 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		74 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		78 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		82 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		86 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		90 		 -2500 	-2000  2500	  3000      // DBOX
+BGSPEC: 		94 		 -2500 	-2000  2500	  3000      // DBOX
 BGSPEC: 		98		   0  		0 	  0  	   0        // REJECT
 BGSPEC: 		102		   0  		0 	  0  	   0        // REJECT
 BGSPEC: 		106		   0  		0 	  0  	   0        // REJECT

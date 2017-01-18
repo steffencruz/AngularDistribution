@@ -1,44 +1,58 @@
-INFILE: Results_RedwoodMats.root
-OUTFILE: Results_3239.root
-CSFILE: AngDist_3239.txt
+INFILE: $TAD/Results_Sr95.root
+OUTFILE: Results_dp3239.root
+CSFILE: AngDist_dp3239.txt
 
-FRAME:     	Cm
-REACTION:		dp
-NORMALIZATION: 7.93e-4 0.07e-4
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9    // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dp
+NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
 EXC: 				3239
 
 GAM: 		 		978
-GAMPEAK: 		960 990
-GAMBGLO:	 	880 920 
-GAMBGHI:	 	1060 1110
+GAMPEAK: 		960 995
+GAMBGLO:	 	900 930 
+//GAMBGHI:	 	995 1015
+GAMBGHI:	 	1055 1085
+
+TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0
-GAMBINSZ:   1.0
+GAMBINSZ:   1.0 // kev per bin
 THETABINSZ: 5.0
+MAXRELERR:  1.5
 
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 
-//BGSPEC: 		2.5				0			0			0 		0  				// REJECT
-//BGSPEC: 		7.5				0			0			0 		0  				// REJECT
-//BGSPEC: 		12.5			0			0			0 		0  				// REJECT
-//BGSPEC: 		17.5			0			0			0 		0  				// REJECT
-//BGSPEC: 		22.5			2600	2800	3600	3700  		// UBOX
-//BGSPEC: 		27.5			2600	2800	3600	3700  		// UBOX
-//BGSPEC: 		32.5			2600	2800	3600	3700  		// UBOX
-//BGSPEC: 		37.5			2600	2800	3600	3700  		// UBOX
-//BGSPEC: 		42.5			2600	2800	3600	3700  		// UBOX
-//BGSPEC: 		47.5			2600	2800	3600	3700  		// UBOX
-//BGSPEC: 		62.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		67.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		72.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		77.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		82.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		87.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		92.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		97.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		102.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		107.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		112.5			2300	2800	3700 	3800  		// DBOX
-//BGSPEC: 		117.5			0			0			0 		0  				// REJECT
-//BGSPEC: 		122.5			0			0			0 		0  				// REJECT
+BGSPEC: 		12.5				0			0			0 		0  				// REJECT
+
+BGSPEC: 		17.5			1000	2700  3700 	4000  			// UBOX
+BGSPEC: 		22.5			1000	2700  3700 	4000  			// UBOX
+BGSPEC: 		27.5			1000	2700  3700 	4000  			// UBOX
+BGSPEC: 		32.5			1000	2700  3700 	4000  			// UBOX
+BGSPEC: 		37.5			1000	2700  3700 	4000  			// UBOX
+
+BGSPEC: 		42.5		  	0     0     0     0 			  // REJECT
+BGSPEC: 		52.5			  0     0     0     0 			  // REJECT
+BGSPEC: 		57.5			  0     0     0     0 			  // REJECT
+
+BGSPEC: 		62.5			1000	2500  3500 	4000  			// DBOX
+BGSPEC: 		67.5			1000	2500  3500 	4000  			// DBOX
+BGSPEC: 		72.5			1000	2500  3500 	4000  			// DBOX
+BGSPEC: 		77.5			1000	2500  3500 	4000  			// DBOX
+BGSPEC: 		82.5			1000	2500  3500 	4000  			// DBOX
+BGSPEC: 		87.5			1000	2500  3500 	4000  			// DBOX
+BGSPEC: 		92.5			1000	2500  3500 	4000  			// DBOX
+BGSPEC: 		97.5			1000	2500  3500 	4000  			// DBOX
+
+BGSPEC: 		102.5 		  0     0     0     0 			  // REJECT
+BGSPEC: 		107.5 		  0     0     0     0 			  // REJECT
+BGSPEC: 		112.5 		  0     0     0     0 			  // REJECT
+BGSPEC: 		117.5 		  0     0     0     0 			  // REJECT

@@ -103,6 +103,8 @@ struct SteffenOptions {
 	std::string cnthist;		
 	
 	std::string badstripsfile;
+	std::string tigeffdata;
+	std::string nndcdata;
 	
   Int_t A         ;
   Double_t BeamE  ;
@@ -123,6 +125,7 @@ struct SteffenOptions {
 	Double_t GamPeak[2];
 	Double_t GamBgLo[2];
 	Double_t GamBgHi[2];
+	Double_t TigAbsEff[3];
 	
 	Double_t ExcBinSz;
 	Double_t GamBinSz;
@@ -141,64 +144,8 @@ struct SteffenOptions {
 	double FitPeakSigma;
 	
 	Bool_t fit;
+	Bool_t expbg;
 };
-
-struct TriplePeakResults {
-
-  double content[3];
-  double height[3];  
-  double mean[3];
-  double sigma[3]; 
-  double cnterr[3];
-  //double bg[3]; //? 
-  double sum;
-  double sumerr;
-  
-  void Print(){
-    printf("\n\n TRIPLE PEAK RESULT : ");
-    printf("\n\tcontent[0] = %.1f +/- %.1f",content[0],cnterr[0]);
-    printf("\n\tmean[0] = %.1f",mean[0]);
-    printf("\n\tsigma[0] = %.1f\n\n",sigma[0]);
-  }
-};
-
-TriplePeakResults GetTripleFitResults(TH1 *hist) {
-  TriplePeakResults tpr;
-  TF1 *f = (TF1*)hist->GetListOfFunctions()->FindObject("triple_gaus_fit");
-  if(!f) return tpr;
-  double xlow,xhigh;
-  f->GetRange(xlow,xhigh);
-  
-  TAxis *xax = hist->GetXaxis();
-  tpr.sum = hist->Integral(xax->FindBin(xlow),xax->FindBin(xhigh));
-  tpr.sumerr = 1/sqrt(tpr.sum);
-  
-  TF1 g("tempgaus","gaus",xlow,xhigh);
-  g.SetParameters(f->GetParameter(0),f->GetParameter(3),f->GetParameter(6));
-  tpr.content[0] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);  
-  tpr.height[0]  = g.GetParameter(0);
-  tpr.mean[0]  = g.GetParameter(1);
-  tpr.sigma[0]  = g.GetParameter(2);
-  tpr.cnterr[0] = sqrt(hist->Integral(xax->FindBin(tpr.mean[0]-3*tpr.sigma[0]),xax->FindBin(tpr.mean[0]+3*tpr.sigma[0])));  
- 
-  g.SetParameters(f->GetParameter(1),f->GetParameter(4),f->GetParameter(6));
-  tpr.content[1] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);
-  tpr.height[1]  = g.GetParameter(0);
-  tpr.mean[1]  = g.GetParameter(1);
-  tpr.sigma[1]  = g.GetParameter(2);
-  tpr.cnterr[1] = sqrt(hist->Integral(xax->FindBin(tpr.mean[1]-3*tpr.sigma[1]),xax->FindBin(tpr.mean[1]+3*tpr.sigma[1])));  
- 
-  g.SetParameters(f->GetParameter(2),f->GetParameter(5),f->GetParameter(6));
-  tpr.content[2] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);
-  tpr.height[2]  = g.GetParameter(0);
-  tpr.mean[2]  = g.GetParameter(1);
-  tpr.sigma[2]  = g.GetParameter(2);
-  tpr.cnterr[2] = sqrt(hist->Integral(xax->FindBin(tpr.mean[2]-3*tpr.sigma[2]),xax->FindBin(tpr.mean[2]+3*tpr.sigma[2]))); 
- 
-  return tpr;
-}
-
-SteffenOptions *info;
 void ClearOptions(SteffenOptions *opt){
   opt->infile        = "";
 	opt->outfile       = "";
@@ -206,6 +153,9 @@ void ClearOptions(SteffenOptions *opt){
 	opt->cntfile			 = "";	
 	opt->cnthist 			 = "";								
 	opt->badstripsfile = "";	
+	opt->tigeffdata    = "";	
+	opt->nndcdata      = "";	
+
   opt->A             = 0;
   opt->BeamE         = 0; 
 	opt->TargetX       = 0.0;
@@ -218,7 +168,7 @@ void ClearOptions(SteffenOptions *opt){
 	opt->ExcLo         = 0.;
 	opt->ExcHi         = 0.;
 	opt->Gam           = 0.;
-	opt->ExcSig			   = 180.;
+	opt->ExcSig			   = 0.; // used to be 180
 	opt->ExcBinSz      = 0.;
 	opt->GamBinSz      = 0.;
 	opt->ThetaBinSz    = 0.;	
@@ -230,12 +180,16 @@ void ClearOptions(SteffenOptions *opt){
 	opt->GamBgLo[1]    = 0.;
 	opt->GamBgHi[0]    = 0.;
 	opt->GamBgHi[1]    = 0.;
+	opt->TigAbsEff[0]  = 0.;
+	opt->TigAbsEff[1]  = 0.;
+	opt->TigAbsEff[2]  = 0.;		
 	opt->MaxRelErr     = 0.;
 	
 	opt->bgtheta.clear();		
 	std::vector<double>   emptyvec;
-	opt->bgspec[0]     = emptyvec;
+	opt->bgspec[0]      = emptyvec;
 	opt->fit						= false;
+	opt->expbg					= false;
 	opt->cnttheta.clear();	
 	return;
 }
@@ -293,7 +247,7 @@ void PrintOptions(SteffenOptions *opt){
   pt->AddText(msg.c_str()); printf("%s",msg.c_str());		
 		
 	if(opt->Gam>0){
-		msg.assign(Form("\n\t-> Gam Energy    = %.2f ",opt->Gam));
+		msg.assign(Form("\n\t-> Gam Energy    = %.2f ",opt->Gam));		
 		pt->AddText(msg.c_str()); printf("%s",msg.c_str());			
 		msg.assign(Form("\n\t    * Gam Peak Rng  = [ %.1f - %.1f ] *",opt->GamPeak[0],opt->GamPeak[1]));
 		pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
@@ -301,6 +255,15 @@ void PrintOptions(SteffenOptions *opt){
 		pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
 		msg.assign(Form("\n\t    * Gam BgHi Rng  = [ %.1f - %.1f ] *",opt->GamBgHi[0],opt->GamBgHi[1]));
 		pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+	  msg.assign(Form("\n\t-> Tig Eff. Data = ' %s ' ",opt->tigeffdata.c_str()));		
+	  pt->AddText(msg.c_str()); printf("%s",msg.c_str());			
+	  if(opt->TigAbsEff[0]){
+      msg.assign(Form("\n\t-> Tig Abs. Eff. = %.3f+/-%.3f %% @ %.3f keV ",
+        opt->TigAbsEff[1],opt->TigAbsEff[2],opt->TigAbsEff[0]));		
+      pt->AddText(msg.c_str()); printf("%s",msg.c_str());			  
+	  }
+	  msg.assign(Form("\n\t-> NNDC Data     = ' %s ' ",opt->nndcdata.c_str()));		
+	  pt->AddText(msg.c_str()); printf("%s",msg.c_str());		  
 	}
 	msg.assign(Form("\n\t-> Exc Bin Sz    = %.1f ",opt->ExcBinSz));	
 	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
@@ -323,6 +286,10 @@ void PrintOptions(SteffenOptions *opt){
       pt->AddText(msg.c_str()); printf("%s",msg.c_str());					
 		}
 	}
+	if(opt->expbg){
+		msg.assign(Form("\n\t-> Exp. Bg.        = %s ",opt->expbg?"TRUE":"FALSE"));	
+		pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+  }
 	
 	if(opt->cntfile.length() && opt->cnthist.length()){
 		msg.assign(Form("\n\t-> cntfile       = ' %s ' ",opt->cntfile.c_str()));
@@ -347,7 +314,7 @@ void PrintOptions(SteffenOptions *opt){
 		pt->AddText(" ");
 		msg.assign("\n\n\t  * Background Specification For Theta Projections *\n");
 		pt->AddText(msg.c_str()); printf("%s",msg.c_str());			
-		msg.assign("\n\t theta    x1lo    x1hi    x2lo   x2hi   const  linear  quad ");
+		msg.assign("\n\t theta    x1lo    x1hi    x2lo   x2hi   const  slope  quad ");
 		pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
 	
 		for(int i=0; i<(int)opt->bgtheta.size(); i++){
@@ -368,6 +335,64 @@ void PrintOptions(SteffenOptions *opt){
 }
 SteffenOptions *SetOptions(std::string);
 
+SteffenOptions *info;
+
+struct TriplePeakResults {
+
+  double content[3];
+  double height[3];  
+  double mean[3];
+  double sigma[3]; 
+  double cnterr[3];
+  //double bg[3]; //? 
+  double sum;
+  double sumerr;
+  
+  void Print(UInt_t indx){
+    printf("\n\n TRIPLE PEAK RESULT : ");
+    printf("\n\tcontent[%i] = %.1f +/- %.1f",indx,content[indx],cnterr[indx]);
+    printf("\n\tmean[%i] = %.1f",indx,mean[indx]);
+    printf("\n\tsigma[%i] = %.1f\n\n",indx,sigma[indx]);
+  }
+};
+TriplePeakResults GetTripleFitResults(TH1 *hist) {
+  TriplePeakResults tpr;
+  TF1 *f = (TF1*)hist->GetListOfFunctions()->FindObject("triple_gaus_fit");
+  if(!f) return tpr;
+  double xlow,xhigh;
+  f->GetRange(xlow,xhigh);
+  
+  TAxis *xax = hist->GetXaxis();
+  tpr.sum = hist->Integral(xax->FindBin(xlow),xax->FindBin(xhigh));
+  tpr.sumerr = 1/sqrt(tpr.sum);
+  
+  TF1 g("tempgaus","gaus",xlow,xhigh);
+  g.SetParameters(f->GetParameter(0),f->GetParameter(3),f->GetParameter(6));
+  tpr.content[0] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);  
+  tpr.height[0]  = g.GetParameter(0);
+  tpr.mean[0]  = g.GetParameter(1);
+  tpr.sigma[0]  = g.GetParameter(2);
+  tpr.cnterr[0] = sqrt(hist->Integral(xax->FindBin(tpr.mean[0]-3*tpr.sigma[0]),xax->FindBin(tpr.mean[0]+3*tpr.sigma[0])));  
+  //tpr.cnterr[0] =  tpr.content[0]*sqrt(pow(tpr.cnterr[0]/tpr.content[0],2)+)
+  
+  g.SetParameters(f->GetParameter(1),f->GetParameter(4),f->GetParameter(6));
+  tpr.content[1] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);
+  tpr.height[1]  = g.GetParameter(0);
+  tpr.mean[1]  = g.GetParameter(1);
+  tpr.sigma[1]  = g.GetParameter(2);
+  tpr.cnterr[1] = sqrt(hist->Integral(xax->FindBin(tpr.mean[1]-3*tpr.sigma[1]),xax->FindBin(tpr.mean[1]+3*tpr.sigma[1])));  
+ 
+  g.SetParameters(f->GetParameter(2),f->GetParameter(5),f->GetParameter(6));
+  tpr.content[2] = g.Integral(xlow,xhigh)/hist->GetBinWidth(0);
+  tpr.height[2]  = g.GetParameter(0);
+  tpr.mean[2]  = g.GetParameter(1);
+  tpr.sigma[2]  = g.GetParameter(2);
+  tpr.cnterr[2] = sqrt(hist->Integral(xax->FindBin(tpr.mean[2]-3*tpr.sigma[2]),xax->FindBin(tpr.mean[2]+3*tpr.sigma[2]))); 
+ 
+  return tpr;
+}
+
+
 Int_t GetIndex(Double_t theta, std::vector<double> v){
 
 	for(int i=0; i<(int)v.size(); i++)
@@ -380,6 +405,7 @@ TH1D *MakeScaleHist(Double_t binsz, Double_t scale, Double_t err, const char *na
 TH1D *MakeCountsHist(TH2F *, TList *);
 Bool_t ExtractCounts(TH1D *, Double_t, UInt_t, UInt_t, Double_t&, Double_t&);
 Double_t PolBg(Double_t *x, Double_t *par);
+Double_t ExpBg(Double_t *x, Double_t *par);
 
 Bool_t ScanEnergyWindow(Double_t exc, Int_t ex_min, Int_t ex_max, Int_t ex_step, Double_t ex_lo=0);
 TH1D *AngularDistribution(std::string);
@@ -425,6 +451,7 @@ Bool_t ScanEnergyWindow(Double_t exc, Int_t ex_min, Int_t ex_max, Int_t ex_step,
   return true;
 }
 
+
 TH1D *AngularDistribution(std::string OptionsFile){
 
 	if(!InitVars(OptionsFile))
@@ -445,7 +472,7 @@ TH1D *AngularDistribution(std::string OptionsFile){
 	// rebin theta & energy, and zoom into energy range
 	hexctheta->RebinX(info->ThetaBinSz);
 	hexctheta->RebinY(info->ExcBinSz/hexctheta->GetYaxis()->GetBinWidth(0));	
-	hexctheta->GetYaxis()->SetRangeUser(info->Exc-1000.,info->Exc+2000.);
+	hexctheta->GetYaxis()->SetRangeUser(info->Exc-2000.,info->Exc+2000.);
 		
 		
 	// counts  ////////////////////////////////////////////////////////////			
@@ -455,16 +482,31 @@ TH1D *AngularDistribution(std::string OptionsFile){
   list->Add(hcounts);	
 
 	if(info->Gam){
-	  TCanvas *ceff = TTigressAnalysis::SetEfficiencyCurve();
+	  
+	  TCanvas *ceff;
+	  if(!info->TigAbsEff[0])
+	    ceff = TTigressAnalysis::SetEfficiencyCurve(info->tigeffdata.c_str(),-1);
+	  else  
+	    ceff = TTigressAnalysis::SetEfficiencyCurve(info->tigeffdata.c_str(),
+	      info->TigAbsEff[0],info->TigAbsEff[1],info->TigAbsEff[2]);
+	  
 	  list->Add(ceff);
-		Double_t gameff = TTigressAnalysis::Efficiency(info->Gam);		
-		Double_t gamerr = TTigressAnalysis::EfficiencyError(info->Gam);			
+
+    Double_t gameff, gamerr; 
+		gameff = TTigressAnalysis::Efficiency(info->Gam);		
+	  gamerr = TTigressAnalysis::EfficiencyError(info->Gam);			
+
 		printf("\n\n\n\n TIGRESS efficiency for %.1f keV gamma gate = %.2f%% +/- %.2f%% [rel. error = %.2f]\n",info->Gam,gameff*100,gamerr*100,gamerr/gameff);
 		TH1D *hgeff = MakeScaleHist(info->ThetaBinSz,1/gameff,gamerr/(gameff*gameff),"TigEfficiency");
 	  list->Add(hgeff);
+	  
 	  hcounts->Scale(1./gameff); // scale without uncertainty and apply after SFRESCO fit.
 	//	hcounts->Multiply(hgeff); // we don't want additional uncertainty yet
 
+    // Load levels and gammas
+    TTigressAnalysis::SetVerbose(false);
+    TTigressAnalysis::LoadLevelsGammas(info->nndcdata.c_str(),100);
+    
 		Double_t br = TTigressAnalysis::BranchingRatio(info->Exc,info->Gam);		
     if(br>0.01){
       printf("\n Branching ratio for this transition = %.4f%% -> correction = %.4f\n\n",br*100.0,1/br);
@@ -475,14 +517,22 @@ TH1D *AngularDistribution(std::string OptionsFile){
 	}
 
 	TH1D *hcorrcounts = (TH1D*)hcounts->Clone(Form("CorrectedCountsVsTheta%s",info->frame.c_str()));	
-	hcorrcounts->SetTitle(Form("Corrected Counts Vs Theta %s; Theta Cm [deg]; Counts Divided By Fractional Coverage",info->frame.c_str()));
+	hcorrcounts->SetTitle(Form("Corrected Counts Vs #theta; #theta_{%s} [#circ]; Counts Divided By Fractional Coverage",info->frame.c_str()));
   list->Add(hcorrcounts);
 	hcorrcounts->Multiply(hcorr); // save each intermediate step in the process
-
-
+  
+  Int_t a2 = info->A;
+  if(info->reaction.find("dp")!=npos)
+    a2+=1;
+  std::string title = Form("^{%i}Sr(%c,%c)^{%i}Sr, E_{exc}=%.0f keV ",info->A,info->reaction[0],
+    info->reaction[1],a2,info->Exc);
+  if(info->Gam)
+    title+=Form("#gamma=%.0f keV",info->Gam);
+    
 	// sigma   ////////////////////////////////////////////////////////////
 	TH1D *hsigma = (TH1D*)hcounts->Clone(Form("CrossSectionVsTheta%s",info->frame.c_str()));
-	hsigma->SetTitle(Form("Differential Cross Section; Theta %s [deg]; Cross section [%s]",info->frame.c_str(),info->Norm>0?"mb/sr":"arb."));	
+	hsigma->SetTitle(Form("%s; #theta_{%s} [#circ]; #frac{d#sigma}{d#Omega} [%s]",
+	    title.c_str(),info->frame.c_str(),info->Norm>0?"mb/sr":"arb."));
   list->Add(hsigma);	
   
 	hsigma->Multiply(hcorr); // acceptance correction applied to counts
@@ -494,7 +544,8 @@ TH1D *AngularDistribution(std::string OptionsFile){
 	
   TGraphErrors *gsigma = new TGraphErrors();
 	gsigma->SetName(Form("CrossSectionVsTheta%s_Graph",info->frame.c_str()));
-	gsigma->SetTitle(Form("Differential Cross Section; Theta %s [deg]; Cross section [%s]",info->frame.c_str(),info->Norm>0?"mb/sr":"arb."));	
+	gsigma->SetTitle(Form("%s; #theta_{%s} [#circ]; #frac{d#sigma}{d#Omega} [%s]",
+	    title.c_str(),info->frame.c_str(),info->Norm>0?"mb/sr":"arb."));
   list->Add(gsigma);
  
   std::ofstream cfile(info->csfile.c_str());
@@ -577,12 +628,13 @@ Bool_t InitVars(std::string OptionsFile){
 	//gStyle->SetOptFit(0112);
 						
 	TReaction *r;
+	// excitation energy is included 
 	if(info->reaction.find("dp")!=npos){
-		r = new TReaction(Form("sr%i",info->A),"d","p",Form("sr%i",info->A+1),info->BeamE,0,true);
+		r = new TReaction(Form("sr%i",info->A),"d","p",Form("sr%i",info->A+1),info->BeamE,info->Exc*1e-3,true);
 	} else if(info->reaction.find("pp")!=npos){
-		r = new TReaction(Form("sr%i",info->A),"p","p",Form("sr%i",info->A),info->BeamE,0,true); 
+		r = new TReaction(Form("sr%i",info->A),"p","p",Form("sr%i",info->A),info->BeamE,info->Exc*1e-3,true); 
 	} else if(info->reaction.find("dd")!=npos){
-		r = new TReaction(Form("sr%i",info->A),"d","d",Form("sr%i",info->A),info->BeamE,0,true); 
+		r = new TReaction(Form("sr%i",info->A),"d","d",Form("sr%i",info->A),info->BeamE,info->Exc*1e-3,true); 
 	} else{
 		printf("\nReaction type '%s' not recognised. Fail. \n\n",info->reaction.c_str());
 		return 0;
@@ -611,8 +663,9 @@ Bool_t InitVars(std::string OptionsFile){
 	TH2F *hexctheta;
 	if(info->Gam>0.0) {
 		TTigressAnalysis::LoadHistos(info->infile.c_str(),info->reaction.c_str());
-		if(!TTigressAnalysis::InitLevelsGammas(100,false))
-			return false;
+
+//		if(!TTigressAnalysis::InitLevelsGammas(100,false))
+//			return false;
 		
 		TTigressAnalysis::SetGamBinSz(info->GamBinSz);
 		TTigressAnalysis::SetExcBinSz(info->ExcBinSz);		
@@ -672,7 +725,7 @@ TH1D *MakeCountsHist(TH2F *h2, TList *list2){
 	
 	TH1D *hcounts,*h1[180];	
 	hcounts = new TH1D(Form("CountsVsTheta%s",info->frame.c_str()),"",h2->GetNbinsX(),0,180);
-	hcounts->SetTitle(Form("CountsVsTheta%s exc=%.1f; Theta %s [deg]; Counts",info->frame.c_str(),info->Exc,info->frame.c_str()));
+	hcounts->SetTitle(Form("CountsVsTheta%s exc=%.1f; #theta_{%s} [#circ]; Counts",info->frame.c_str(),info->Exc,info->frame.c_str()));
 
 	Double_t theta, tot_counts, bg_counts, counts, err;		
 	Double_t binwid = htmpy->GetBinWidth(0);
@@ -737,7 +790,12 @@ TH1D *MakeCountsHist(TH2F *h2, TList *list2){
 		c[cnum]->cd(pad+1);
 		h1[j]->Draw();
 
-		TF1 *f1 = h1[j]->GetFunction("bg_pol");
+		TF1 *f1;
+    if(info->expbg)
+  		 f1 = h1[j]->GetFunction("bg_exp");
+  	else 	 
+  		 f1 = h1[j]->GetFunction("bg_pol");
+  	
 		if(!f1) continue;		
 		
 		TBox *bp = new TBox(f1->GetParameter(3),h1[j]->GetMinimum()*1.05,f1->GetParameter(4),h1[j]->GetMaximum()*1.05);
@@ -762,10 +820,16 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
 	Double_t xmax = h->GetBinCenter(binhi);	
 	Double_t binwid = h->GetBinWidth(0);
 		
-	TF1 *fbg = new TF1("bg_pol",PolBg,xmin-5*binwid,xmax+5*binwid,5); // fitted background
-	fbg->SetParNames("const","slope","quad","x1hi","x2lo");
-	fbg->SetParameters(0,0,0,0);
-	
+	TF1 *fbg;
+	if(info->expbg){
+	  fbg = new TF1("bg_exp",ExpBg,xmin-5*binwid,xmax+5*binwid,5); // fitted background
+	  fbg->SetParNames("bg_const","exp_slope","exp_mean","x1hi","x2lo");
+    fbg->SetParameters(0,0,0,0);
+  }else {
+	  fbg = new TF1("bg_pol",PolBg,xmin-5*binwid,xmax+5*binwid,5); // fitted background
+	  fbg->SetParNames("bg_const","bg_slope","bg_quad","x1hi","x2lo");  
+    fbg->SetParameters(0,0,0,0);
+	}
 	// set background manually
 	Double_t thta, x1lo, x1hi, x2lo, x2hi, bg_const=0.0, bg_slope=0.0, bg_quad=0.0;	
 	Int_t indx = GetIndex(theta,info->bgtheta);
@@ -812,8 +876,12 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
       if(bg_const) fbg->FixParameter(0,bg_const);
       printf("\n\t*** User specified background *** const = %.1f   slope = %.1f   quad = %.1f",bg_const,bg_slope,bg_quad); 											
     } else {
-      printf("\n\t Background will be fitted using a pol1 function in specified range");
-      fbg->FixParameter(2,0.0);
+      if(info->expbg){
+        printf("\n\t Background will be fitted using an exp function in specified range");
+      } else {
+        printf("\n\t Background will be fitted using a pol1 function in specified range");
+        fbg->FixParameter(2,0.0);      
+      }
     }
   } else { // default to linear bg if no spec
     fbg->FixParameter(2,0.0);							
@@ -824,19 +892,47 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
 	
     if(info->FitPeakMean.size()==3){
       std::vector<double> mean = info->FitPeakMean;
-     
-      TF1 *peakfit = DoTripleGausFit(h,-1500,2000,mean[0],mean[1],mean[2],info->FitPeakSigma);
+      
+      UInt_t indx=0;
+      // Grab appropriate peak from triple fit
+      for(int i=0; i<(int)mean.size(); i++)
+        if(mean.at(i)==info->Exc)
+          indx = i;
+     /*
+     xmax = 2500.0;
+     xmin = -2000.0;
+     Double_t expgr = 0.0002;
+      if(theta<=22.0){ // uqqq specific settings
+        h->GetXaxis()->SetRangeUser(-1000,1200);
+        xmin = -2000;        
+        xmax = 1200.0;
+        if(theta==22)
+          
+        expgr = 0.002;
+      } else if(theta==26)
+        expgr = 0.001;
+       */ 
+       // constrain exponential background slope to be the same in each section
+     Double_t expgr = 0.0002;
+      if(theta<=22.0){ // uqqq specific settings
+        h->GetXaxis()->SetRangeUser(-1000,1200);
+        expgr = 0.002;
+      } else if(theta==26)
+        expgr = 0.001;        
+        
+      TF1 *peakfit = DoTripleGausFit(h,xmin,xmax,mean[0],mean[1],mean[2],info->FitPeakSigma,expgr);
       
       TriplePeakResults res = GetTripleFitResults(h);
-      res.Print();
-      counts = res.content[0];
-      err = res.cnterr[0];	      
+      res.Print(indx);
+      // choose output counts from 0, 352 or 680 peak.
+      counts = res.content[indx];
+      err = res.cnterr[indx];	      
       return true;
     }
 
 		printf("\n\t  FULL FIT   * Spectrum will be fitted with a pol1 + gaus function *");
 		const char *gform = "[0]/(sqrt(2*3.14159)*[2])*exp(-pow(x-[1],2.0)/(2*[2]*[2]))";
-		TF1 *peakfit = new TF1("peak_fit",Form("%s+[3]+[4]*x",gform),info->Exc-1000,info->Exc+1000);//xmin,xmax);
+		TF1 *peakfit = new TF1("peak_fit",Form("%s+[3]+[4]*x",gform),info->Exc-1000,info->Exc+2000);//xmin,xmax);
 		peakfit->SetLineWidth(1);
 		peakfit->SetNpx(1000);
 		
@@ -878,11 +974,6 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
 	if(p) // make sure that it's still added to the list of functions
 		h->GetListOfFunctions()->Add(fbg);
 
-
-	bg_const = fbg->GetParameter(0);
-	bg_slope = fbg->GetParameter(1); 
-	bg_quad  = fbg->GetParameter(2); 	
-
 	Double_t bg_counts = fbg->Integral(xmin,xmax)/binwid;
 	Double_t bg_err = fbg->IntegralError(xmin,xmax)/binwid;
 
@@ -892,8 +983,7 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
 		return false;
 	} else if(counts<0)
 		counts = 0;
-		
-	printf("\n\t Fit result :  bg_const = %.3f  bg_slope = %.3f  bg_quad = %.3f\n\t->  bg_counts = %.1f +/- %.1f",bg_const,bg_slope,bg_quad,bg_counts,bg_err);
+
 	Double_t err_lo = sqrt(counts-bg_counts-bg_err);
 	Double_t err_hi = sqrt(counts-bg_counts+bg_err); 	
 	// assume that peak is zero at xmax and xmin 			
@@ -904,28 +994,25 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
 	err = sqrt(err2);
 	//err = 0.5*(err_lo+err_hi);
 		
-	TF1 *fbg2 = new TF1("bg_pol2","pol2",xmin,xmax);
-	fbg2->SetLineColor(3);		
-	fbg2->SetParameters(bg_const,bg_slope,bg_quad);
+	bg_const = fbg->GetParameter(0);
+	bg_slope = fbg->GetParameter(1); 
+	bg_quad  = fbg->GetParameter(2); 		
+	printf("\n\t Fit result :  %s = %.3e  %s = %.3e  %s = %.3e\n\t->  bg_counts = %.1f +/- %.1f",
+	  fbg->GetParName(0),bg_const,fbg->GetParName(1),bg_slope,fbg->GetParName(2),bg_quad,bg_counts,bg_err);
+			
+	TF1 *fbg2;
+	if(info->expbg)
+	  fbg2 = new TF1("bg_exp2","[0]+TMath::Exp([1]*(x-[2]))",xmin,xmax);
+	else 
+	  fbg2 = new TF1("bg_pol2","pol2",xmin,xmax);
+
+  fbg2->SetParameters(bg_const,bg_slope,bg_quad);	  
+	fbg2->SetLineColor(3);			
 	fbg2->SetRange(xmin,xmax);		
 	h->GetListOfFunctions()->Add(fbg2);
 		
 	return true;
 }
-
-
-TH1D *MakeScaleHist(Double_t binsz, Double_t scale, Double_t err, const char *name){
-
-  Int_t nbins = (Int_t)180.0/binsz;
-  TH1D *hscale = new TH1D(name,name,nbins,0,180);
-  hscale->SetTitle(Form("Scale Histogram for %s; Theta %s [deg]; Scale",name,info->frame.c_str()));
-  for(int i=1; i<=nbins; i++){
-    hscale->SetBinContent(i,scale);
-    hscale->SetBinError(i,err);
-  }
-  return hscale;
-}    
-
 
 Double_t PolBg(Double_t *x, Double_t *par){
 
@@ -939,6 +1026,31 @@ Double_t PolBg(Double_t *x, Double_t *par){
 	}	
 
 }
+
+Double_t ExpBg(Double_t *x, Double_t *par){
+
+	Double_t val =  par[0] + TMath::Exp(par[1]*(x[0]-par[2]));
+			
+	if(x[0]<par[3] || x[0]>par[4]) // only evaluate outer region for bg estimation
+		return val;
+	else{
+		TF1::RejectPoint();
+		return val;
+	}	
+
+}
+
+TH1D *MakeScaleHist(Double_t binsz, Double_t scale, Double_t err, const char *name){
+
+  Int_t nbins = (Int_t)180.0/binsz;
+  TH1D *hscale = new TH1D(name,name,nbins,0,180);
+  hscale->SetTitle(Form("Scale Histogram for %s; #theta_{%s} [#circ]; Scale",name,info->frame.c_str()));
+  for(int i=1; i<=nbins; i++){
+    hscale->SetBinContent(i,scale);
+    hscale->SetBinError(i,err);
+  }
+  return hscale;
+}    
 
 
 void trim(std::string * line, const std::string trimChars = " \f\n\r\t\v") {
@@ -1010,6 +1122,10 @@ SteffenOptions *SetOptions(std::string OptionsFile) {
 			 info->cnthist = line;  			 
 		} else if(type.compare("BADSTRIPSFILE")==0) {
 			 info->badstripsfile = line;
+		} else if(type.compare("TIGEFFDATA")==0) {
+			 info->tigeffdata = line;			 
+		} else if(type.compare("NNDCDATA")==0) {
+			 info->nndcdata = line;			 			 
 		} else if(type.compare("A")==0) {
 			int tempd; ss>>tempd;
 			 info->A = tempd;			 
@@ -1093,7 +1209,7 @@ SteffenOptions *SetOptions(std::string OptionsFile) {
          info->NormErr = tempvec.at(1);	         	
 		} else if(type.compare("FIT")==0) {
 			 if(strcmp(line.c_str(),"TRUE")==0)
-			 	info->fit = true; 			 
+			 	info->fit = true; 				 					 			 
 	  } else if(type.compare("FITPEAKMEAN")==0) { // 3 NUMBERS
 			 double value;
 			 std::vector<double> tempvec;
@@ -1111,10 +1227,22 @@ SteffenOptions *SetOptions(std::string OptionsFile) {
 					info->bgtheta.push_back(tempvec.at(0)); 
 					info->bgspec[info->bgtheta.size()-1] = tempvec;
 			 } 	
-		}		else if(type.compare("CNTSPEC")==0) {
+		}		else if(type.compare("COUNTSPEC")==0) {
 			 double value;
-			 while (ss >> value) {   info->cnttheta.push_back(value); }
-		}				
+			 while (ss >> value) {   info->cnttheta.push_back(value); }				
+		} else if(type.compare("EXPBG")==0) {
+			 if(strcmp(line.c_str(),"TRUE")==0)
+			 	info->expbg = true; 	
+    } else if(type.compare("TIGABSEFF")==0) {
+			 double value;
+			 std::vector<double> tempvec;
+			 while (ss >> value) {   tempvec.push_back(value); }
+			 if(tempvec.size()==3) {
+					info->TigAbsEff[0] = tempvec.at(0);
+					info->TigAbsEff[1] = tempvec.at(1);
+					info->TigAbsEff[2] = tempvec.at(2);					
+			 } 
+    }
   }
   
   if(info->cnttheta.size() && (!info->cntfile.length() || !info->cnthist.length())){
