@@ -23,7 +23,7 @@ as is a branching ratio correction, see TTigressAnalysis docs.
 __A sample input file:-__
 
 INFILE: Results_Mats.root  
-OUTFILE: Results_1229.root  		  			
+OUTFILE: Results_1229.root    
 CSFILE: AngDist_1229.txt		  					// angular distribution output file    
 
 FRAME:     	Cm  
