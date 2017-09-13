@@ -20,7 +20,6 @@ An efficiency correction is automatically carried out if available
 as is a branching ratio correction, see TTigressAnalysis docs.
 
 __A sample input file is shown below__
-========================================
 
 INFILE: Results_Mats.root  
 OUTFILE: Results_1229.root  		  			
