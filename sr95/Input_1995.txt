@@ -11,7 +11,7 @@ TARGTHICK: 4.5      // 4.5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
+NORMALIZATION: 5.25e-4 3.6e-6   // I don't care if this changes
 
 EXC: 				1995
 EXCLO:      1500
@@ -22,7 +22,8 @@ GAMPEAK: 		1160 1200
 GAMBGLO:	 	1120 1160 
 GAMBGHI:	 	1200 1230
 
-TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+TIGEFFDATA:    AddbackEfficiencyData2014.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.34  0.15        // Eff @ 1121.1 keV = (9.34+/-0.15)%
 NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0
@@ -34,7 +35,15 @@ MAXRELERR:  1.5
 
 BGSPEC:			13.5   			0			0			0			0		 			// REJECT
 
-BGSPEC:			40.5   		1000  1300  2500  2800	 			// UBOX
+BGSPEC:			16.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			19.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			22.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			25.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			28.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			31.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			34.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			37.5   		1000  1600  2600  2800	 			// UBOX
+BGSPEC:			40.5   		1000  1600  2600  2800	 			// UBOX
 
 BGSPEC:			43.5   			0			0			0			0		 			// REJECT
 BGSPEC:			46.5   			0			0			0			0		 			// REJECT
@@ -59,33 +68,3 @@ BGSPEC:			106.5   	  0     0     0     0	  	 		// REJECT
 BGSPEC:			109.5   	  0     0     0     0	  	 		// REJECT
 BGSPEC:			112.5   	  0     0     0     0	  	 		// REJECT
 BGSPEC:			115.5   	  0     0     0     0	  	 		// REJECT
-
-
-
-//BGSPEC:			6   		1000	1500  2500	 2600		 		// UQQQ
-//BGSPEC:			10   		1000	1500  2500	 2600		 		// UQQQ
-//BGSPEC:			14   		  0   	0     0 	 0   		 		// REJECT
-//BGSPEC:			18   		1000	1500  2500	 2600		 		// UBOX
-//BGSPEC:			22   		1000	1500  2500	 2600		 		// UBOX
-//BGSPEC:			26   		1000	1500  2500	 2600		 		// UBOX
-//BGSPEC:			30   		1000	1500  2500	 2600		 		// UBOX
-//BGSPEC:			34   		1000	1500  2500	 2600		 		// UBOX
-//BGSPEC:			38   		1000	1500  2500	 2600		 		// UBOX
-//BGSPEC:			42   		1000	1500  2500	 2600		 		// UBOX
-//BGSPEC:			46   			0			0			0			0		 			// REJECT
-//BGSPEC:			54   			0			0			0			0		 			// REJECT
-//BGSPEC:			58   			0			0			0			0		 			// REJECT
-//BGSPEC:			62   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			66   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			70   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			74   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			78   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			82   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			86   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			90   		1000  1300  2500  2800		 		// DBOX
-//BGSPEC:			94   			0			0			0			0		 			// REJECT
-//BGSPEC:			98   			0			0			0			0		 			// REJECT
-//BGSPEC:			102  			0			0			0			0		 			// REJECT
-//BGSPEC:			106  			0			0			0			0		 			// REJECT
-//BGSPEC:			110  			0			0			0			0		 			// REJECT
-//BGSPEC:			114  			0			0			0			0		 			// REJECT

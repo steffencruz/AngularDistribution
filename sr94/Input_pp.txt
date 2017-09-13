@@ -1,24 +1,124 @@
-INFILE: Results_Sr94_Elastics.root
-OUTFILE: Results_sr94_pp.root
-CSFILE: AngDist_sr94_pp.txt
+INFILE: $TAD/Results_Sr94.root
+OUTFILE: Results_pp.root
+CSFILE: AngDist_pp.txt
 
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
 A:         94
-BEAME:     500      // in middle of target, MeV
+BEAME:     500     // in middle of target, MeV
 TARGPOS:   0 0 0   // Z = 0.0 mm
-TARGTHICK: 5.0      // 5 um
+TARGTHICK: 5.0     // 5 um
 
 FRAME:     Cm
 REACTION:	 pp
 
 EXC: 				0
-EXCSIG:			350
+EXCLO:			-1000
+EXCHI:			1000
 
 GAM: 				0
 NORMALIZATION: 1.0
 
-EXCBINSZ: 	40.0
+EXCBINSZ: 	60.0
 THETABINSZ: 1.0
 MAXRELERR:  1.0
 
-FIT:				TRUE
+FIT:				FALSE
+
+// user specified counts from another file
+CNTFILE: FittedSlices_ProtCombined.root //FittedSlices.root 
+CNTHIST: AverageCounts 									//ProtCounts_1DegCm
+
+
+BGSPEC: 		24.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		25.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		26.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		27.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		28.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		29.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		30.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		31.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		32.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		33.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		34.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		35.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		36.5		   0  		0 	  0  	   0        // REJECT
+
+COUNTSPEC: 	37.5	 
+COUNTSPEC: 	38.5	 
+COUNTSPEC: 	39.5	 
+COUNTSPEC: 	40.5	 
+COUNTSPEC: 	41.5	 
+COUNTSPEC: 	42.5	 
+COUNTSPEC: 	43.5	 
+COUNTSPEC: 	43.5	 
+COUNTSPEC: 	44.5	 
+COUNTSPEC: 	45.5	 
+COUNTSPEC: 	46.5	 
+
+BGSPEC: 		47.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		48.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		49.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		50.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		51.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		52.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		53.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		54.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		55.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		56.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		57.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		58.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		59.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		60.5		   0  		0 	  0  	   0        // REJECT
+BGSPEC: 		61.5		   0  		0 	  0  	   0        // REJECT
+
+BGSPEC: 		62.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		63.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		64.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		65.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		66.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		67.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		68.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		69.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		70.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		71.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		72.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		73.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		74.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		75.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		76.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		77.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		78.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		79.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		80.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		81.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		82.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		83.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		84.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		85.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		86.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		87.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		88.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		89.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		90.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		91.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		92.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		93.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		94.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		95.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		96.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		97.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		98.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		99.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		100.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		101.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		102.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+BGSPEC: 		103.5		 -1000  -600  600  	1500  0 0 0     // DBOX
+
+BGSPEC: 		104.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		105.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		106.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		107.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		108.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		109.5		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 		110.5		 0  		0 	  0  	   0        // REJECT
+

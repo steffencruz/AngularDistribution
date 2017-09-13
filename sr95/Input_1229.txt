@@ -11,18 +11,19 @@ TARGTHICK: 4.5      // 4.5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
+NORMALIZATION: 5.25e-4 3.6e-6   // I don't care if this changes
 
 EXC: 				1229
-EXCLO:      830
-EXCHI:      1630
+EXCLO:      800
+EXCHI:      1650
 
 GAM: 		 		415
 GAMPEAK: 		400 425
 GAMBGLO:	 	380 400 
 GAMBGHI:	 	425 445
 
-TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+TIGEFFDATA:    AddbackEfficiencyData2014.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.34  0.15        // Eff @ 1121.1 keV = (9.34+/-0.15)%
 NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0
@@ -30,22 +31,22 @@ GAMBINSZ:   1.0 // kev per bin
 THETABINSZ: 4.0
 MAXRELERR:  1.5
 
-THETARNG: true    
+//THETARNG: true    
 
 //bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 
 
 BGSPEC:			46   			0			0			0			0		 			// REJECT
 BGSPEC:			58   			0			0			0			0		 			// REJECT
+BGSPEC:			62   			0			0	    0	    0		 		  // REJECT
 
-BGSPEC:			62   			0			500	 1200	 1500		 		// DBOX
-BGSPEC:			66   			0			500	 1200	 1500		 		// DBOX
-BGSPEC:			70   			0			500	 1200	 1500		 		// DBOX
-BGSPEC:			74   			0			500	 1200	 1500		 		// DBOX
-BGSPEC:			78   			0			500	 1200	 1500		 		// DBOX
-BGSPEC:			82   			0			500	 1200	 1500		 		// DBOX
-BGSPEC:			86   			0			500	 1200	 1500		 		// DBOX
-BGSPEC:			90   			0			500	 1200	 1500		 		// DBOX
+BGSPEC:			66   			0			500	 1400	 1500		 		// DBOX
+BGSPEC:			70   			0			500	 1400	 1500		 		// DBOX
+BGSPEC:			74   			0			500	 1400	 1500		 		// DBOX
+BGSPEC:			78   			0			500	 1400	 1500		 		// DBOX
+BGSPEC:			82   			0			500	 1400	 1500		 		// DBOX
+BGSPEC:			86   			0			500	 1400	 1500		 		// DBOX
+BGSPEC:			90   			0			500	 1400	 1500		 		// DBOX
 
 
 BGSPEC:			94   			0			0			0			0		 			// REJECT

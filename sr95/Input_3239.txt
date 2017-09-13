@@ -1,6 +1,6 @@
 INFILE: $TAD/Results_Sr95.root
-OUTFILE: Results_dp3239.root
-CSFILE: AngDist_dp3239.txt
+OUTFILE: Results_dp3239_gam340.root
+CSFILE: AngDist_dp3239_gam340.txt
 
 BADSTRIPSFILE: $SAD/BadStrips.txt
 
@@ -11,17 +11,25 @@ TARGTHICK: 4.5      // 4.5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
+NORMALIZATION: 5.25e-4 3.6e-6   // I don't care if this changes
 
 EXC: 				3239
+EXCLO:			3000
+EXCHI:			3800
+
+//GAM:        340
+//GAMPEAK: 		333 346
+//GAMBGLO:	 	310 330 
+//GAMBGHI:	 	370 380
 
 GAM: 		 		978
 GAMPEAK: 		960 995
 GAMBGLO:	 	900 930 
-//GAMBGHI:	 	995 1015
-GAMBGHI:	 	1055 1085
+GAMBGHI:	 	1000 1020
+//GAMBGHI:	 	1055 1085
 
-TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+TIGEFFDATA:    AddbackEfficiencyData2014.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.34  0.15        // Eff @ 1121.1 keV = (9.34+/-0.15)%
 NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0

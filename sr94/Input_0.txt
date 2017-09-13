@@ -1,6 +1,6 @@
 INFILE: $TAD/Results_Sr94.root
-OUTFILE: Results_dp0_fit.root
-CSFILE: AngDist_dp0_fit.txt
+OUTFILE: Results_dp681_fit.root
+CSFILE: AngDist_dp681_fit.txt
 
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
 
@@ -11,16 +11,23 @@ TARGTHICK: 5.0      // 5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 0.0222	0.0001
+// from sr95 inputs
+// normalization from (d,d) is 1.5737e-2 ± 1.5324E-04
+// beam purity is 0.50 ± 0.05
+// deuteration is 0.96 ± 0.02
+// combined relative error = 0.103
+// total norm = 3.279e-2 ± 3.36e-3
+NORMALIZATION: 3.279e-2 ± 3.36e-3
+//NORMALIZATION: 0.0179	0.0002
 
-EXC: 				0
+EXC: 				681
 
 EXCBINSZ: 	40.0
 THETABINSZ: 4.0
 MAXRELERR:  1.5
 
 FIT:         TRUE
-FITPEAKMEAN:  0 352 680
+FITPEAKMEAN:  0 352 681
 FITPEAKSIGMA: 150 
 
 //THETARNG: true    
@@ -30,8 +37,10 @@ FITPEAKSIGMA: 150
 BGSPEC: 		2	  	   0  		0 	  0  	   0        // REJECT
 BGSPEC: 		6 		 -2500 	-2000  1200	  1500      // UQQQ
 BGSPEC: 		10 		 -2500 	-2000  1200	  1500      // UQQQ
-BGSPEC: 		14 		 -2500 	-2000  1200	  1500      // UQQQ
-BGSPEC: 		18 		 -2500 	-2000  1200	  1500      // UQQQ
+BGSPEC: 		14  	   0  		0 	  0  	   0        // REJECT
+//BGSPEC: 	14 		 -2500 	-2000  1200	  1500      // UQQQ
+BGSPEC: 		18  	   0  		0 	  0  	   0        // REJECT
+//BGSPEC: 	18 		 -2500 	-2000  1200	  1500      // UQQQ
 BGSPEC: 		22 		 -2500 	-2000  1400	  1500      // UQQQ
 
 BGSPEC: 		26 		 -2500 	-2000  2500	  3000      // UBOX

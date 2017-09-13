@@ -11,7 +11,7 @@ TARGTHICK: 4.5      // 4.5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
+NORMALIZATION: 5.25e-4 3.6e-6   // I don't care if this changes
 
 EXC: 				2307
 
@@ -20,7 +20,8 @@ GAMPEAK: 		445 465
 GAMBGLO:	 	430 443 
 GAMBGHI:	 	467 480
 
-TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+TIGEFFDATA:    AddbackEfficiencyData2014.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.34  0.15        // Eff @ 1121.1 keV = (9.34+/-0.15)%
 NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 EXCBINSZ: 	40.0

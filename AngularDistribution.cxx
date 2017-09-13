@@ -180,9 +180,9 @@ void ClearOptions(SteffenOptions *opt){
 	opt->GamBgLo[1]    = 0.;
 	opt->GamBgHi[0]    = 0.;
 	opt->GamBgHi[1]    = 0.;
-	opt->TigAbsEff[0]  = 0.;
-	opt->TigAbsEff[1]  = 0.;
-	opt->TigAbsEff[2]  = 0.;		
+	opt->TigAbsEff[0]  = -1.;
+	opt->TigAbsEff[1]  = -1.;
+	opt->TigAbsEff[2]  = -1.;		
 	opt->MaxRelErr     = 0.;
 	
 	opt->bgtheta.clear();		
@@ -392,7 +392,6 @@ TriplePeakResults GetTripleFitResults(TH1 *hist) {
   return tpr;
 }
 
-
 Int_t GetIndex(Double_t theta, std::vector<double> v){
 
 	for(int i=0; i<(int)v.size(); i++)
@@ -477,19 +476,18 @@ TH1D *AngularDistribution(std::string OptionsFile){
 		
 	// counts  ////////////////////////////////////////////////////////////			
 	TList *list2 = new TList;  // fill list with projections
-  TH1D *hcounts = MakeCountsHist(hexctheta,list2); // get counts versus theta
+  TH1D *hcountsraw = MakeCountsHist(hexctheta,list2); // get counts versus theta
+  list->Add(hcountsraw);
+  
+  TH1D *hcounts = (TH1D*)hcountsraw->Clone("EffBrCorrectedCountsVsThetaCm");
+  // very important step! If I group together five degrees i'll hav five times more cross
+  // section, however this should not produce an angular distribution with 5xSF
   hcounts->Scale(1/info->ThetaBinSz); // average the counts instead of rebinning	  
   list->Add(hcounts);	
 
 	if(info->Gam){
 	  
-	  TCanvas *ceff;
-	  if(!info->TigAbsEff[0])
-	    ceff = TTigressAnalysis::SetEfficiencyCurve(info->tigeffdata.c_str(),-1);
-	  else  
-	    ceff = TTigressAnalysis::SetEfficiencyCurve(info->tigeffdata.c_str(),
-	      info->TigAbsEff[0],info->TigAbsEff[1],info->TigAbsEff[2]);
-	  
+	  TCanvas *ceff = TTigressAnalysis::SetEfficiencyCurve(info->tigeffdata.c_str(),info->TigAbsEff[0],info->TigAbsEff[1],info->TigAbsEff[2]);
 	  list->Add(ceff);
 
     Double_t gameff, gamerr; 
@@ -912,15 +910,25 @@ Bool_t ExtractCounts(TH1D *h, Double_t theta, UInt_t binlo, UInt_t binhi, Double
       } else if(theta==26)
         expgr = 0.001;
        */ 
+     
+     TF1 *peakfit;     
+     if(!info->Gam){
+       Double_t expgr = 0.0002;     
        // constrain exponential background slope to be the same in each section
-     Double_t expgr = 0.0002;
-      if(theta<=22.0){ // uqqq specific settings
-        h->GetXaxis()->SetRangeUser(-1000,1200);
-        expgr = 0.002;
-      } else if(theta==26)
-        expgr = 0.001;        
-        
-      TF1 *peakfit = DoTripleGausFit(h,xmin,xmax,mean[0],mean[1],mean[2],info->FitPeakSigma,expgr);
+        if(theta<=22.0){ // uqqq specific settings
+          h->GetXaxis()->SetRangeUser(-1000,1200);
+          expgr = 0.002;
+        } else if(theta==26)
+          expgr = 0.001;    
+          
+        peakfit = DoTripleGausFit(h,xmin,xmax,mean[0],mean[1],mean[2],info->FitPeakSigma,expgr);         
+      } else {
+        h->GetXaxis()->SetRangeUser(info->ExcLo,info->ExcHi);
+        for(int i=1; i<=h->GetNbinsX(); i++)
+          h->SetBinError(i,sqrt(h->GetBinContent(i)));     
+        // last argument is the paximum centroid shift from specified position
+        peakfit = DoTripleGausFitNoBg(h,xmin,xmax,mean[0],mean[1],mean[2],info->FitPeakSigma,100.0);          
+      }
       
       TriplePeakResults res = GetTripleFitResults(h);
       res.Print(indx);

@@ -11,35 +11,71 @@ TARGTHICK: 4.5      // 4.5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
 
+// I can just renormalize this data to include the gamma-gamma efficiency
+// TIG efficiency at 815 = 10.9217%
+// so we have 1.1928% efficiency for double gamma gate [0.011928]
+// The branching ratio is 85%, but we actually have twice the sensitivity b/c 813~815
+// This gives a gamma-gamma efficiency of
+// E = 0.011928 * 0.85 * 2 = 0.0203
+// So we combine this efficiency with the normalization constant 
+// relative error is sqrt( (dN/N)^2 + (2*dE/E)^2 ) = 0.119669
+// NORMALIZATION: 5.25e-4 3.6e-6  
+ NORMALIZATION: 2.59e-2 3.1e-3   // includes efficiency
+ 
 EXC: 				1628
 
-GAM: 		 	  813
-GAMPEAK: 	  800 830
-GAMBGLO:	  780 800
-GAMBGHI:	  830 850
+//GAM: 		 		815
+//GAMPEAK: 		800 825
+//GAMBGLO:	 	780 800 
+//GAMBGHI:	 	825 845
 
-TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+// user specified counts from another file
+CNTFILE: DoubleGammaGated815.root 
+CNTHIST: CountsVsThetaCm_1200_2000_4Deg //
+
+TIGEFFDATA:    AddbackEfficiencyData2014.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.34  0.15        // Eff @ 1121.1 keV = (9.34+/-0.15)%
 NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
-
 
 EXCBINSZ: 	40.0
 GAMBINSZ:   1.0
-THETABINSZ: 5.0
+THETABINSZ: 4.0
 
-//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+BGSPEC: 	2		 0  		0 	  0  	   0        // REJECT
 
-BGSPEC: 		2.5		    0     0     0     0  		  // REJECT
+COUNTSPEC: 6
+COUNTSPEC: 10
 
-BGSPEC:			47.5   		0			0			0			0		 			// REJECT
-BGSPEC:			57.5   		0			0			0			0		 			// REJECT
+BGSPEC: 	14		 0  		0 	  0  	   0        // REJECT
 
-BGSPEC:			92.5   		0			0			0			0		 			// REJECT
-BGSPEC:			97.5   		0			0			0			0		 			// REJECT
-BGSPEC:			102.5		 	0			0			0			0		 			// REJECT
-BGSPEC:			107.5 		0			0			0			0		 			// REJECT
-BGSPEC: 		112.5			0			0			0 		0  				// REJECT
+COUNTSPEC: 18
+COUNTSPEC: 22
+COUNTSPEC: 26
+COUNTSPEC: 30
+COUNTSPEC: 34
+COUNTSPEC: 38
+COUNTSPEC: 42
 
+BGSPEC: 	46		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	50		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	54		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	58		 0  		0 	  0  	   0        // REJECT
 
+COUNTSPEC: 62
+COUNTSPEC: 66
+COUNTSPEC: 70
+COUNTSPEC: 74
+COUNTSPEC: 78
+COUNTSPEC: 82
+COUNTSPEC: 86
+COUNTSPEC: 90
+COUNTSPEC: 94
+COUNTSPEC: 98
+COUNTSPEC: 102
+
+BGSPEC: 	106		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	110		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	114		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	118		 0  		0 	  0  	   0        // REJECT
 

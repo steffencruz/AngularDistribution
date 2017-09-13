@@ -4,14 +4,13 @@ CSFILE: AngDist_dd.txt
 
 BADSTRIPSFILE: $SAD/BadStrips_sr94.txt
 A:         94
-BEAME:     500      // in middle of target, MeV
+BEAME:     500     // in middle of target, MeV
 TARGPOS:   0 0 0   // Z = 0.0 mm
-TARGTHICK: 5.0      // 5 um
+TARGTHICK: 5.0     // 5 um
 
 FRAME:     Cm
 REACTION:	 dd
 
-EXC: 				0
 EXC: 				0
 EXCLO:			-1000
 EXCHI:			1000

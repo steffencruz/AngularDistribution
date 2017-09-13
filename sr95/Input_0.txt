@@ -14,7 +14,7 @@ REACTION:	 dp
 
 EXC: 				0
 GAM: 				0
-NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
+NORMALIZATION: 5.25e-4 3.6e-6   // I don't care if this changes
 
 EXCBINSZ: 	40.0
 THETABINSZ: 2.0
@@ -51,17 +51,17 @@ BGSPEC: 		49		 	 0 			0 		0			0 		   // REJECT
 BGSPEC: 		59		 	 0 			0 		0			0 		   // REJECT
 BGSPEC: 		61		 	 0 			0 		0			0 		   // REJECT
 BGSPEC: 		63		   0  		0 	  0  	  0        // REJECT
-BGSPEC: 		65		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		67		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		69		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		71		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		73		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		75		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		77		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		79		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		81		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		83		 -2000	-800 		200 	1500     // DBOX
-BGSPEC: 		85		 -2000	-800 		250 	1500     // DBOX
+BGSPEC: 		65		 -1000	-800 		200 	1000     // DBOX
+BGSPEC: 		67		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		69		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		71		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		73		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		75		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		77		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		79		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		81		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		83		 -2000	-800 		200 	1000     // DBOX
+BGSPEC: 		85		 -2000	-800 		250 	1000     // DBOX
 
 // get rid of all angles greater than 85 degrees, we don't have data past this
 BGSPEC: 		87		 	 0 			0 		0			0 		   // REJECT

@@ -11,7 +11,14 @@ TARGTHICK: 5.0      // 5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 0.0222	0.0001
+// from sr95 inputs
+// normalization from (d,d) is 1.5737e-2 ± 1.5324E-04
+// beam purity is 0.50 ± 0.05
+// deuteration is 0.96 ± 0.02
+// combined relative error = 0.103
+// total norm = 3.279e-2 ± 3.36e-3
+NORMALIZATION: 3.279e-2 ± 3.36e-3
+//NORMALIZATION: 0.0179	0.0002
 
 EXC: 				352
 EXCLO:      -52
@@ -36,6 +43,7 @@ MAXRELERR:  1.5
 //bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 
 BGSPEC: 		12.5 		    0     0     0	    0       // REJECT
+BGSPEC: 		17.5 		    0 	  0     0	    0      // REJECT
 
 BGSPEC: 		57.5 		    0     0     0	    0       // REJECT
 BGSPEC: 		62.5 		 -2500 	-450  450	  1500      // DBOX

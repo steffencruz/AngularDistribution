@@ -11,7 +11,7 @@ TARGTHICK: 4.5      // 4.5 um
 
 FRAME:     Cm
 REACTION:	 dp
-NORMALIZATION: 5.87e-4 0.04e-4   // I don't care if this changes
+NORMALIZATION: 5.25e-4 3.6e-6   // I don't care if this changes
 
 EXC: 				1507
 
@@ -25,7 +25,8 @@ GAMPEAK: 	  1485 1525
 GAMBGLO:	  1455 1485
 GAMBGHI:	  1525 1555
 
-TIGEFFDATA:    AddbackEfficiencyData.txt // looks for it in $TAD
+TIGEFFDATA:    AddbackEfficiencyData2014.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.34  0.15        // Eff @ 1121.1 keV = (9.34+/-0.15)%
 NNDCDATA:      Sr96_LevelsGammas.txt // looks for it in $TAD
 
 
@@ -36,6 +37,8 @@ THETABINSZ: 5.0
 //bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
 
 BGSPEC: 		2.5		    0     0     0     0  		  // REJECT
+BGSPEC: 		12.5		  0     0     0     0  		  // REJECT
+
 
 BGSPEC:			47.5   		0			0			0			0		 			// REJECT
 BGSPEC:			57.5   		0			0			0			0		 			// REJECT
