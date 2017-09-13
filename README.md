@@ -41,7 +41,7 @@ EXCBINSZ: 	40.0
 GAMBINSZ:   1.0  
 THETABINSZ: 4.0  
 
-//bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope
+//bgspec: theta[mid] bglo1 bglo2 bghi1 bghi2 const slope  
 BGSPEC:			94   			0			0			0			0		 			// REJECT  
 BGSPEC:			98   			0			0			0			0		 			// REJECT  
 BGSPEC:			102 			0			0			0			0		 			// REJECT  
