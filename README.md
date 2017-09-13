@@ -19,7 +19,8 @@ in the structure entitled ' SteffenOptions '
 An efficiency correction is automatically carried out if available
 as is a branching ratio correction, see TTigressAnalysis docs.
 
-__A sample input file is shown below__
+
+__A sample input file:-__
 
 INFILE: Results_Mats.root  
 OUTFILE: Results_1229.root  		  			
