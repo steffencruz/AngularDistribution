@@ -119,6 +119,7 @@ struct SteffenOptions {
 	Double_t Exc;
 	Double_t ExcLo;
 	Double_t ExcHi;
+	Double_t ExcViewRng;
 	Double_t ExcSig;
 
 	Double_t Gam;
@@ -167,6 +168,7 @@ void ClearOptions(SteffenOptions *opt){
 	opt->Exc           = 0.;
 	opt->ExcLo         = 0.;
 	opt->ExcHi         = 0.;
+	opt->ExcViewRng    = 0.;	
 	opt->Gam           = 0.;
 	opt->ExcSig			   = 0.; // used to be 180
 	opt->ExcBinSz      = 0.;
@@ -232,11 +234,15 @@ void PrintOptions(SteffenOptions *opt){
 	msg.assign(Form("\n\t-> Exc Energy    = %.2f ",opt->Exc));
 	if(opt->ExcLo){
 	  pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
-	  msg.assign(Form("\n\t-> ExcLo Energy  = %.2f ",opt->ExcLo));
+	  msg.assign(Form("\n\t-> ExcLo       = %.2f ",opt->ExcLo));
 	}
 	if(opt->ExcHi){
     pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
-    msg.assign(Form("\n\t-> ExcHi Energy  = %.2f ",opt->ExcHi));	
+    msg.assign(Form("\n\t-> ExcHi       = %.2f ",opt->ExcHi));	
+	}
+	if(opt->ExcViewRng){
+	  pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
+	  msg.assign(Form("\n\t-> ExcViewRng  = %.2f ",opt->ExcViewRng));
 	}
 	pt->AddText(msg.c_str()); printf("%s",msg.c_str());	
 	msg.assign(Form("\n\t-> Exc Sigma     = %.2f ",opt->ExcSig));	
@@ -471,7 +477,7 @@ TH1D *AngularDistribution(std::string OptionsFile){
 	// rebin theta & energy, and zoom into energy range
 	hexctheta->RebinX(info->ThetaBinSz);
 	hexctheta->RebinY(info->ExcBinSz/hexctheta->GetYaxis()->GetBinWidth(0));	
-	hexctheta->GetYaxis()->SetRangeUser(info->Exc-2000.,info->Exc+2000.);
+	hexctheta->GetYaxis()->SetRangeUser(info->Exc-info->ExcViewRng,info->Exc+info->ExcViewRng);
 		
 		
 	// counts  ////////////////////////////////////////////////////////////			
@@ -522,6 +528,8 @@ TH1D *AngularDistribution(std::string OptionsFile){
   Int_t a2 = info->A;
   if(info->reaction.find("dp")!=npos)
     a2+=1;
+  else if(info->reaction.find("dp")!=npos)
+    a2-=1;    
   std::string title = Form("^{%i}Sr(%c,%c)^{%i}Sr, E_{exc}=%.0f keV ",info->A,info->reaction[0],
     info->reaction[1],a2,info->Exc);
   if(info->Gam)
@@ -633,6 +641,8 @@ Bool_t InitVars(std::string OptionsFile){
 		r = new TReaction(Form("sr%i",info->A),"p","p",Form("sr%i",info->A),info->BeamE,info->Exc*1e-3,true); 
 	} else if(info->reaction.find("dd")!=npos){
 		r = new TReaction(Form("sr%i",info->A),"d","d",Form("sr%i",info->A),info->BeamE,info->Exc*1e-3,true); 
+	} else if(info->reaction.find("dt")!=npos){
+		r = new TReaction(Form("sr%i",info->A),"d","t",Form("sr%i",info->A-1),info->BeamE,info->Exc*1e-3,true);
 	} else{
 		printf("\nReaction type '%s' not recognised. Fail. \n\n",info->reaction.c_str());
 		return 0;
@@ -655,6 +665,9 @@ Bool_t InitVars(std::string OptionsFile){
 	if(!info->ExcHi)
 	  info->ExcHi = info->Exc+400.0;		
 		
+	if(!info->ExcViewRng)
+	  info->ExcViewRng = 2000.0;	 
+	  		
 	if(!info->MaxRelErr)
 	  info->MaxRelErr = 1.0;
 	  	
@@ -747,7 +760,7 @@ TH1D *MakeCountsHist(TH2F *h2, TList *list2){
 			counts = hcntfile->GetBinContent(cntbin);
 			err = hcntfile->GetBinError(cntbin);
 			
-			printf("\n\n %i.\t THETA = %3.1f ..",i,theta);
+			printf("\n\n %i.\t THETA = %3.1f [bin=%u]..",i,theta,cntbin);
 			printf("\n\t *** USER SPECIFIED COUNTS :   peak counts = %5.1f+/-%4.1f\n",counts,err); 		
 			hcounts->SetBinContent(i,counts);
 			hcounts->SetBinError(i,err);	
@@ -1164,7 +1177,10 @@ SteffenOptions *SetOptions(std::string OptionsFile) {
 			info->ExcLo = tempd;
     } else if(type.compare("EXCHI")==0) {
 			double tempd; ss>>tempd;
-			info->ExcHi = tempd;							 
+			info->ExcHi = tempd;	
+		} else if(type.compare("EXCVIEWRNG")==0) {
+			double tempd; ss>>tempd;
+			info->ExcViewRng = tempd;								 
 		} else if(type.compare("EXCSIG")==0) {
 			double tempd; ss>>tempd;
 			 info->ExcSig = tempd;			 
