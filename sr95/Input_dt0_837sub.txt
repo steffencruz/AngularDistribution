@@ -1,0 +1,76 @@
+INFILE: $TAD/Results_Sr95dt_Pad.root
+OUTFILE: Results_dt0_837sub.root
+CSFILE: AngDist_dt0_837sub.txt
+
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9     // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dt
+
+EXC: 				0
+EXCVIEWRNG: 10000
+EXCSIG: 		350
+GAM: 				0
+
+// normalization from (d,d) is 4.87(3)e-4
+// beam purity is 0.95(3)
+// deuteration is 0.92(1)
+// combined relative error = 0.034
+// total norm = 5.57(19)e-4
+NORMALIZATION: 5.57e-4 1.9e-5   // complete
+//NORMALIZATION: 5.25e-4 3.6e-6   // OLD
+
+EXCBINSZ: 	40.0
+THETABINSZ: 2.0
+
+// user specified counts from another file
+CNTFILE: Results_Sr95dt_GsCounts.root 
+CNTHIST: CountsVsThetaCm
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const lin quad
+
+BGSPEC: 	41		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	43		 0  		0 	  0  	   0        // REJECT
+BGSPEC: 	45		 0  		0 	  0  	   0        // REJECT
+
+COUNTSPEC: 47
+COUNTSPEC: 49
+COUNTSPEC: 51
+COUNTSPEC: 53
+COUNTSPEC: 55
+COUNTSPEC: 57
+COUNTSPEC: 59
+COUNTSPEC: 61
+COUNTSPEC: 63
+COUNTSPEC: 65
+COUNTSPEC: 67
+COUNTSPEC: 69
+COUNTSPEC: 61
+COUNTSPEC: 63
+COUNTSPEC: 65
+COUNTSPEC: 67
+COUNTSPEC: 69
+COUNTSPEC: 71
+COUNTSPEC: 73
+COUNTSPEC: 75
+COUNTSPEC: 77
+COUNTSPEC: 79
+COUNTSPEC: 81
+COUNTSPEC: 83
+COUNTSPEC: 85
+COUNTSPEC: 87
+COUNTSPEC: 89
+COUNTSPEC: 91
+COUNTSPEC: 93
+COUNTSPEC: 95
+COUNTSPEC: 97
+COUNTSPEC: 99
+
+BGSPEC: 	101		 0  		0 	  0  	   0        // REJECT
+
+

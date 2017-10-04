@@ -1,0 +1,84 @@
+INFILE: $TAD/Results_Sr95dt_Pad.root
+OUTFILE: Results_dt837.root
+CSFILE: AngDist_dt837.txt
+
+BADSTRIPSFILE: $SAD/BadStrips.txt
+
+A:         95
+BEAME:     510.9     // in middle of target, MeV
+TARGPOS:   0 0 0    // Z = 0.0 mm
+TARGTHICK: 4.5      // 4.5 um
+
+FRAME:     Cm
+REACTION:	 dt
+
+EXC: 				837
+EXCVIEWRNG: 10000
+EXCLO:      300
+EXCHI:      1600
+EXCSIG: 		350
+
+GAM: 		 		837
+GAMPEAK: 		815 855
+GAMBGLO:	 	795 815 
+GAMBGHI:	 	855 875
+
+TIGEFFDATA:    AddbackEfficiencyData2014.txt // looks for it in $TAD
+TIGABSEFF:     1121.1  9.34  0.15        // Eff @ 1121.1 keV = (9.34+/-0.15)%
+NNDCDATA:      Sr94_LevelsGammas.txt // looks for it in $TAD
+
+// normalization from (d,d) is 4.87(3)e-4
+// beam purity is 0.95(3)
+// deuteration is 0.92(1)
+// combined relative error = 0.034
+// total norm = 5.57(19)e-4
+NORMALIZATION: 5.57e-4 1.9e-5   // complete
+//NORMALIZATION: 5.25e-4 3.6e-6   // OLD
+
+EXCBINSZ: 	40.0
+THETABINSZ: 2.0
+
+EXPBG:    TRUE
+
+//bgspec theta[mid] bglo1 bglo2 bghi1 bghi2 const lin quad
+
+BGSPEC: 		41		 0  0 0 0 		   // REJECT
+BGSPEC: 		43		 0  0 0 0 		   // REJECT
+BGSPEC: 		45		 0  0 0 0 		   // REJECT
+
+BGSPEC: 		93		 0  0 0 0 		   // REJECT
+BGSPEC: 		95		 0  0 0 0 		   // REJECT
+BGSPEC: 		97		 0  0 0 0 		   // REJECT
+
+//BGSPEC: 		37		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		39		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		41		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		43		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		45		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		47		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		49		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		51		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		53		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		55		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		57		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		59		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		61		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		63		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		65		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		67		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		69		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		71		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		73		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		75		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		77		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		79		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		81		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		83		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		85		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		87		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		89		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		91		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		93		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		95		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		97		 -1500 	-1000	1000	1500 		   // DBOX
+//BGSPEC: 		99		 -1500 	-1000	1000	1500 		   // DBOX
